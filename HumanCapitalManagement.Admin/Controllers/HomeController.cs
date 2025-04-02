@@ -15,6 +15,7 @@ namespace HumanCapitalManagement.Admin.Controllers
 
         public IActionResult Index()
         {
+
             return View();
         }
 
