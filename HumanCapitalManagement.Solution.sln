@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Admin", "HumanCapitalManagement.Admin\HumanCapitalManagement.Admin.csproj", "{AE82924A-D320-4A68-9191-F65F7B3AEC7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Web", "HumanCapitalManagement.Admin\HumanCapitalManagement.Web.csproj", "{AE82924A-D320-4A68-9191-F65F7B3AEC7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
