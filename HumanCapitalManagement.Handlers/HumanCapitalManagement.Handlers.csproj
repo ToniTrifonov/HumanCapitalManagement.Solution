@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\" />
+    <ProjectReference Include="..\HumanCapitalManagement.Contracts\HumanCapitalManagement.Contracts.csproj" />
+    <ProjectReference Include="..\HumanCapitalManagement.Data\HumanCapitalManagement.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HumanCapitalManagement.Contracts\HumanCapitalManagement.Contracts.csproj" />
-    <ProjectReference Include="..\HumanCapitalManagement.Data\HumanCapitalManagement.Data.csproj" />
+    <Folder Include="Queries\" />
   </ItemGroup>
 
 </Project>

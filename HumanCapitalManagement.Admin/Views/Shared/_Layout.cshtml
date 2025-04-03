@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using HumanCapitalManagement.Contracts.Enums
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -20,7 +21,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (User.IsInRole("Admin"))
+                        @if (User.IsInRole(UserRole.Admin.ToString()))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Accounts" asp-action="Create">Create Account</a>
@@ -38,11 +39,6 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - HumanCapitalManagement.Admin - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

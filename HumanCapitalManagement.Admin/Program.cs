@@ -1,8 +1,8 @@
 using HumanCapitalManagement.Admin.Data;
 using HumanCapitalManagement.Contracts;
-using HumanCapitalManagement.Contracts.Queries.Roles;
-using HumanCapitalManagement.Contracts.Results.Roles;
-using HumanCapitalManagement.Handlers.Queries.Roles;
+using HumanCapitalManagement.Contracts.Commands.Accounts;
+using HumanCapitalManagement.Contracts.Results.Accounts;
+using HumanCapitalManagement.Handlers.Commands.Accounts;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +19,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IAsyncQueryHandler<AllRolesQuery, AllRolesResult>, AllRolesQueryHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>, CreateAccountCommandHandler>();
 
 var app = builder.Build();
 
