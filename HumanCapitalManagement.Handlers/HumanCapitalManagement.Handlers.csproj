@@ -10,4 +10,9 @@
     <Folder Include="Commands\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HumanCapitalManagement.Contracts\HumanCapitalManagement.Contracts.csproj" />
+    <ProjectReference Include="..\HumanCapitalManagement.Data\HumanCapitalManagement.Data.csproj" />
+  </ItemGroup>
+
 </Project>

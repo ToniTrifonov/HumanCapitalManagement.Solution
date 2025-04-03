@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Web"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Contracts", "HumanCapitalManagement.Contracts\HumanCapitalManagement.Contracts.csproj", "{D5C71EC8-92B7-4906-B785-BB51D18B7F5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Handlers", "HumanCapitalManagement.Handlers\HumanCapitalManagement.Handlers.csproj", "{891ACD43-882F-45CE-8171-779F998C4B4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Data", "HumanCapitalManagement.Data\HumanCapitalManagement.Data.csproj", "{172B0E55-D6AD-439C-AD7A-702CF256C02D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{D5C71EC8-92B7-4906-B785-BB51D18B7F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5C71EC8-92B7-4906-B785-BB51D18B7F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5C71EC8-92B7-4906-B785-BB51D18B7F5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{891ACD43-882F-45CE-8171-779F998C4B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{891ACD43-882F-45CE-8171-779F998C4B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{891ACD43-882F-45CE-8171-779F998C4B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{891ACD43-882F-45CE-8171-779F998C4B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172B0E55-D6AD-439C-AD7A-702CF256C02D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172B0E55-D6AD-439C-AD7A-702CF256C02D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172B0E55-D6AD-439C-AD7A-702CF256C02D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172B0E55-D6AD-439C-AD7A-702CF256C02D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
