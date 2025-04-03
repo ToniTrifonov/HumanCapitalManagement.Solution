@@ -18,15 +18,18 @@ namespace HumanCapitalManagement.Web.Data
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
 
-            var role = new IdentityRole()
+            var roles = new List<IdentityRole>()
             {
-                Name = "Admin",
-                NormalizedName = "admin"
+                new() { Name = "Admin", NormalizedName = "admin" },
+                new() { Name = "ProjectManager", NormalizedName = "projectmanager" },
             };
 
-            if (!context.Set<IdentityRole>().Any(r => r.Name == role.Name))
+            foreach (var role in roles)
             {
-                context.Set<IdentityRole>().Add(role);
+                if (!context.Set<IdentityRole>().Any(r => r.Name == role.Name))
+                {
+                    context.Set<IdentityRole>().Add(role);
+                }
             }
 
             if (!context.Set<IdentityUser>().Any(u => u.UserName == user.UserName))
@@ -38,7 +41,7 @@ namespace HumanCapitalManagement.Web.Data
                 context.Set<IdentityUser>().Add(user);
                 context.Set<IdentityUserRole<string>>().Add(new IdentityUserRole<string>()
                 {
-                    RoleId = role.Id,
+                    RoleId = roles[0].Id,
                     UserId = user.Id
                 });
             }
@@ -59,15 +62,18 @@ namespace HumanCapitalManagement.Web.Data
                 SecurityStamp = Guid.NewGuid().ToString(),
             };
 
-            var role = new IdentityRole()
+            var roles = new List<IdentityRole>()
             {
-                Name = "Admin",
-                NormalizedName = "admin"
+                new() { Name = "Admin", NormalizedName = "admin" },
+                new() { Name = "ProjectManager", NormalizedName = "projectmanager" },
             };
 
-            if (!(await context.Set<IdentityRole>().AnyAsync(r => r.Name == role.Name)))
+            foreach (var role in roles)
             {
-                await context.Set<IdentityRole>().AddAsync(role);
+                if (!(await context.Set<IdentityRole>().AnyAsync(r => r.Name == role.Name)))
+                {
+                    await context.Set<IdentityRole>().AddAsync(role);
+                }
             }
 
             if (!(await context.Set<IdentityUser>().AnyAsync(u => u.UserName == user.UserName)))
@@ -79,7 +85,7 @@ namespace HumanCapitalManagement.Web.Data
                 await context.Set<IdentityUser>().AddAsync(user);
                 await context.Set<IdentityUserRole<string>>().AddAsync(new IdentityUserRole<string>()
                 {
-                    RoleId = role.Id,
+                    RoleId = roles[0].Id,
                     UserId = user.Id
                 });
             }
