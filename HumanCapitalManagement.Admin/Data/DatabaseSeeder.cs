@@ -9,8 +9,8 @@ namespace HumanCapitalManagement.Web.Data
         {
             var user = new IdentityUser
             {
-                UserName = "AdminUser",
-                NormalizedUserName = "adminuser",
+                UserName = "admin@admin.com",
+                NormalizedUserName = "admin@admin.com",
                 Email = "admin@admin.com",
                 NormalizedEmail = "admin@admin.com",
                 EmailConfirmed = true,
@@ -50,8 +50,8 @@ namespace HumanCapitalManagement.Web.Data
         {
             var user = new IdentityUser
             {
-                UserName = "AdminUser",
-                NormalizedUserName = "adminuser",
+                UserName = "admin@admin.com",
+                NormalizedUserName = "admin@admin.com",
                 Email = "admin@admin.com",
                 NormalizedEmail = "admin@admin.com",
                 EmailConfirmed = true,
