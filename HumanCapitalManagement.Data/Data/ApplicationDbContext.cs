@@ -1,4 +1,5 @@
-﻿using HumanCapitalManagement.Web.Data;
+﻿using HumanCapitalManagement.Data.Entities;
+using HumanCapitalManagement.Web.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,8 @@ namespace HumanCapitalManagement.Admin.Data
             : base(options)
         {
         }
+
+        public virtual DbSet<Project> Projects { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

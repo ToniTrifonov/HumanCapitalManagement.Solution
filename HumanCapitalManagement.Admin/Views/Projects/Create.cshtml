@@ -1,0 +1,32 @@
+﻿@model HumanCapitalManagement.Web.Models.Projects.AllProjectsViewModel
+
+@if (!Model.Projects.Any()) 
+{
+    <div>
+        <span class="text-info">No projects have been created yet.</span>
+    </div>
+}
+else 
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Size</th>
+                <th scope="col">Date of Creation</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var project in Model.Projects)
+            {
+                <tr> 
+                    <td>@project.Name</td>
+                    <td>@project.Description</td>
+                    <td>@project.Size</td>
+                    <td>@project.CreateDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

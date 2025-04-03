@@ -11,8 +11,4 @@
     <ProjectReference Include="..\HumanCapitalManagement.Data\HumanCapitalManagement.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
 </Project>
