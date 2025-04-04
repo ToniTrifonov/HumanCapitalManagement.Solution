@@ -6,6 +6,7 @@ using HumanCapitalManagement.Contracts.Queries.Projects;
 using HumanCapitalManagement.Contracts.Results.Accounts;
 using HumanCapitalManagement.Contracts.Results.Projects;
 using HumanCapitalManagement.Handlers.Commands.Accounts;
+using HumanCapitalManagement.Handlers.Commands.Projects;
 using HumanCapitalManagement.Handlers.Queries.Projects;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -4,7 +4,7 @@ using HumanCapitalManagement.Contracts.Commands.Projects;
 using HumanCapitalManagement.Contracts.Results.Projects;
 using HumanCapitalManagement.Data.Entities;
 
-namespace HumanCapitalManagement.Handlers.Queries.Projects
+namespace HumanCapitalManagement.Handlers.Commands.Projects
 {
     public class CreateProjectCommandHandler : IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>
     {
@@ -25,8 +25,8 @@ namespace HumanCapitalManagement.Handlers.Queries.Projects
                 CreateDate = DateTime.UtcNow,
             };
 
-            await this.context.Set<Project>().AddAsync(newProject);
-            await this.context.SaveChangesAsync();
+            await context.Set<Project>().AddAsync(newProject);
+            await context.SaveChangesAsync();
 
             return new CreateProjectResult();
         }
