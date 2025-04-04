@@ -1,6 +1,7 @@
 using HumanCapitalManagement.Admin.Data;
 using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Accounts;
+using HumanCapitalManagement.Contracts.Commands.Projects;
 using HumanCapitalManagement.Contracts.Queries.Projects;
 using HumanCapitalManagement.Contracts.Results.Accounts;
 using HumanCapitalManagement.Contracts.Results.Projects;
@@ -24,6 +25,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>, CreateAccountCommandHandler>();
 builder.Services.AddScoped<IAsyncQueryHandler<ProjectsByUserIdQuery, ProjectsByUserIdResult>, ProjectsByUserIdQueryHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>, CreateProjectCommandHandler>();
 
 var app = builder.Build();
 
