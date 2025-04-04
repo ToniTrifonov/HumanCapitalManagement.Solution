@@ -22,6 +22,7 @@ namespace HumanCapitalManagement.Handlers.Queries.Projects
                 .Where(project => project.UserId == query.UserId)
                 .Select(project => new ProjectsResultItem()
                 {
+                    Id = project.Id,
                     CreateDate = project.CreateDate,
                     Size = project.Size,
                     Description = project.Description,

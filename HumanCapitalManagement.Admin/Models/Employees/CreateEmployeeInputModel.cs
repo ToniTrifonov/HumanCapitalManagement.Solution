@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HumanCapitalManagement.Contracts.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace HumanCapitalManagement.Web.Models.Employees
 {
@@ -10,8 +11,8 @@ namespace HumanCapitalManagement.Web.Models.Employees
         [Required(ErrorMessage = "LastName is required.", AllowEmptyStrings = false)]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Position is required.", AllowEmptyStrings = false)]
-        public string Position { get; set; }
+        [Required(ErrorMessage = "Position is required.")]
+        public EmployeePosition Position { get; set; }
 
         [Required(ErrorMessage = "Salary is required.")]
         [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive number.")]

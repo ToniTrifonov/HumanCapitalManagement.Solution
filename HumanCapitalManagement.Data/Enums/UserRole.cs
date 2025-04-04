@@ -2,7 +2,7 @@
 {
     public enum UserRole
     {
-        Admin,
-        ProjectManager
+        Admin = 1,
+        ProjectManager = 2
     }
 }

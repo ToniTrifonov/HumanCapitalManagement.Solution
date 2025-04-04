@@ -1,7 +1,7 @@
 ﻿@model HumanCapitalManagement.Web.Models.Projects.AllProjectsViewModel
 
 <div>
-    <a type="button" class="btn-info" asp-controller="Projects" asp-action="Create">New Project</a>
+    <a type="button" class="btn-info" asp-controller="Projects" asp-action="Create">Create Project</a>
     @if (!Model.Projects.Any())
     {
         <div>
@@ -23,7 +23,7 @@
                 @foreach (var project in Model.Projects)
                 {
                     <tr>
-                        <td>@project.Name</td>
+                        <td><a asp-controller="Employees" asp-action="All" asp-route-projectid="@project.Id">@project.Name</a></td>
                         <td>@project.Description</td>
                         <td>@project.Size</td>
                         <td>@project.CreateDate</td>

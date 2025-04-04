@@ -1,4 +1,6 @@
-﻿namespace HumanCapitalManagement.Data.Entities
+﻿using HumanCapitalManagement.Contracts.Enums;
+
+namespace HumanCapitalManagement.Data.Entities
 {
     public class Employee
     {
@@ -6,13 +8,14 @@
         {
             this.Id = Guid.NewGuid().ToString();
         }
+
         public string Id { get; set; }
 
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public string Position { get; set; }
+        public EmployeePosition Position { get; set; }
 
         public decimal Salary { get; set; }
 
