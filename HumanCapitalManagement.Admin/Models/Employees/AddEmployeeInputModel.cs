@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HumanCapitalManagement.Web.Models.Employees
 {
-    public class CreateEmployeeInputModel
+    public class AddEmployeeInputModel
     {
         [Required(ErrorMessage = "FirstName is required.", AllowEmptyStrings = false)]
         public string FirstName { get; set; }

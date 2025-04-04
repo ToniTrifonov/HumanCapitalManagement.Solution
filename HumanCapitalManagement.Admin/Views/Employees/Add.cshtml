@@ -1,7 +1,7 @@
 ﻿@using HumanCapitalManagement.Web.ViewHelpers
-@model HumanCapitalManagement.Web.Models.Employees.CreateEmployeeInputModel
+@model HumanCapitalManagement.Web.Models.Employees.AddEmployeeInputModel
 
-<form asp-controller="Employees" asp-action="Create" method="post">
+<form asp-controller="Employees" asp-action="Add" method="post">
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
@@ -30,5 +30,6 @@
         </div>
         <span asp-validation-for="@Model.Salary" class="text-danger"></span>
     </div>
+    <input asp-for="@Model.ProjectId" type="hidden" value="@ViewBag.ProjectId" class="form-control" />
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

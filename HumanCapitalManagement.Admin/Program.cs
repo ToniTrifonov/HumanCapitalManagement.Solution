@@ -1,6 +1,7 @@
 using HumanCapitalManagement.Admin.Data;
 using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Accounts;
+using HumanCapitalManagement.Contracts.Commands.Employees;
 using HumanCapitalManagement.Contracts.Commands.Projects;
 using HumanCapitalManagement.Contracts.Queries.Employees;
 using HumanCapitalManagement.Contracts.Queries.Projects;
@@ -8,6 +9,7 @@ using HumanCapitalManagement.Contracts.Results.Accounts;
 using HumanCapitalManagement.Contracts.Results.Employees;
 using HumanCapitalManagement.Contracts.Results.Projects;
 using HumanCapitalManagement.Handlers.Commands.Accounts;
+using HumanCapitalManagement.Handlers.Commands.Employees;
 using HumanCapitalManagement.Handlers.Commands.Projects;
 using HumanCapitalManagement.Handlers.Queries.Employees;
 using HumanCapitalManagement.Handlers.Queries.Projects;
@@ -31,6 +33,7 @@ builder.Services.AddScoped<IAsyncCommandHandler<CreateAccountCommand, CreateAcco
 builder.Services.AddScoped<IAsyncQueryHandler<ProjectsByUserIdQuery, ProjectsByUserIdResult>, ProjectsByUserIdQueryHandler>();
 builder.Services.AddScoped<IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>, CreateProjectCommandHandler>();
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult>, EmployeesByProjectIdQueryHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>, AddEmployeeCommandHandler>();
 
 var app = builder.Build();
 
