@@ -14,6 +14,15 @@ namespace HumanCapitalManagement.Admin.Data
 
         public virtual DbSet<Project> Projects { get; set; }
 
+        public virtual DbSet<Employee> Employees { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Employee>().Property(x => x.Salary).HasPrecision(18, 2);
+
+            base.OnModelCreating(builder);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
