@@ -35,13 +35,13 @@ namespace HumanCapitalManagement.Web.Controllers
 
             var viewModel = new AllProjectsViewModel(projectsResult.Projects);
 
-            return View(viewModel);
+            return View("AllProjects", viewModel);
         }
 
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View("CreateProject");
         }
 
         [HttpPost]
@@ -49,7 +49,7 @@ namespace HumanCapitalManagement.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(inputModel);
+                return View("CreateProject", inputModel);
             }
 
             var userId = this.userManager.GetUserId(User);

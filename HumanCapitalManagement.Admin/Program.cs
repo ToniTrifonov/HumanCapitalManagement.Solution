@@ -56,7 +56,6 @@ app.MapPost("/Identity/Account/Register", context => Task.Factory.StartNew(() =>
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

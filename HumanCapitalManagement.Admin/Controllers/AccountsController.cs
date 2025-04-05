@@ -20,7 +20,7 @@ namespace HumanCapitalManagement.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View("CreateAccount");
         }
 
         [HttpPost]
@@ -35,7 +35,7 @@ namespace HumanCapitalManagement.Web.Controllers
             var createAccountResult = await this.createAccountHandler.HandleAsync(createAccountCommand);
             ViewData["Message"] = createAccountResult.Message;
 
-            return View(input);
+            return View("CreateAccount", input);
         }
     }
 }

@@ -39,14 +39,14 @@ namespace HumanCapitalManagement.Web.Controllers
 
             var viewModel = new AllEmployeesViewModel(employeesResult.Employees, projectId);
 
-            return View(viewModel);
+            return View("AllEmployees", viewModel);
         }
 
         [HttpGet]
         public IActionResult Add(string projectId)
         {
             ViewBag.ProjectId = projectId;
-            return View();
+            return View("AddEmployee");
         }
 
         [HttpPost]
@@ -54,14 +54,14 @@ namespace HumanCapitalManagement.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(inputModel);
+                return View("AddEmployee", inputModel);
             }
 
             var addEmployeeCommand = new AddEmployeeCommand(inputModel.FirstName, inputModel.LastName, inputModel.Salary, inputModel.Position, inputModel.ProjectId);
             var addEmployeeResult = await this.addEmployeeHandler.HandleAsync(addEmployeeCommand);
 
             ViewBag.Message = addEmployeeResult.Message;
-            return View();
+            return View("AddEmployee");
         }
     }
 }
