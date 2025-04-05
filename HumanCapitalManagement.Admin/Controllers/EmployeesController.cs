@@ -13,13 +13,16 @@ namespace HumanCapitalManagement.Web.Controllers
     {
         private readonly IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult> employeesByProjectHandler;
         private readonly IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult> addEmployeeHandler;
+        private readonly IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult> employeeByIdHandler;
 
         public EmployeesController(
             IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult> employeesByProjectHandler,
-            IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult> addEmployeeHandler)
+            IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult> addEmployeeHandler,
+            IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult> employeeByIdHandler)
         {
             this.employeesByProjectHandler = employeesByProjectHandler;
             this.addEmployeeHandler = addEmployeeHandler;
+            this.employeeByIdHandler = employeeByIdHandler;
         }
 
         [HttpGet]
@@ -56,6 +59,17 @@ namespace HumanCapitalManagement.Web.Controllers
             var addEmployeeResult = await this.addEmployeeHandler.HandleAsync(addEmployeeCommand);
 
             return Json(new { addEmployeeResult.Succeed, addEmployeeResult.ErrorMessage });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var employeeByIdQuery = new EmployeeByIdQuery(id);
+            var employeeByIdResult = await this.employeeByIdHandler.HandleAsync(employeeByIdQuery);
+
+            var editEmployeeModel = new EditEmployeeModel(employeeByIdResult.Employee);
+
+            return PartialView("_EditEmployee", editEmployeeModel);
         }
     }
 }

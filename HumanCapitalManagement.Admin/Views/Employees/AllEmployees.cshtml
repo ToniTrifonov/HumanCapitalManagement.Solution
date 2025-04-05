@@ -37,6 +37,9 @@
                             <td>@employee.FirstName @employee.LastName</td>
                             <td>@employee.Position.ToString()</td>
                             <td>@employee.Salary</td>
+                            <td>
+                                <button type="button" class="btn-warning load-edit-employee-form-btn" data-employee-id="@employee.Id">Edit</button>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -59,7 +62,20 @@
                         $("#employee-form").html(htmlResult);
                     }
                 })
-            })
+            });
+
+            $(".load-edit-employee-form-btn").click(function() {
+                var employeeId = $(this).attr("data-employee-id");
+                console.log(employeeId);
+
+                $.ajax({
+                    method: "GET",
+                    url: `Edit?id=${employeeId}`,
+                    success: function(htmlResult) {
+                        $("#employee-form").html(htmlResult);
+                    }
+                })
+            });
         })
     </script>
 }
