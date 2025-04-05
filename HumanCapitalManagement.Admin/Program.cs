@@ -35,6 +35,7 @@ builder.Services.AddScoped<IAsyncCommandHandler<CreateProjectCommand, CreateProj
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult>, EmployeesByProjectIdQueryHandler>();
 builder.Services.AddScoped<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>, AddEmployeeCommandHandler>();
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult>, EmployeeByIdQueryHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>, EditEmployeeCommandHandler>();
 
 var app = builder.Build();
 

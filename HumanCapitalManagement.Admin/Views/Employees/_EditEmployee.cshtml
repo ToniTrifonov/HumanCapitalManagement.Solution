@@ -5,26 +5,62 @@
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
-            <input asp-for="@Model.Employee.FirstName" id="employee-first-name" type="text" class="form-control" />
+            <input asp-for="@Model.FirstName" id="employee-first-name" type="text" class="form-control" />
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
-            <input asp-for="@Model.Employee.LastName" id="employee-last-name" class="form-control" />
+            <input asp-for="@Model.LastName" id="employee-last-name" class="form-control" />
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">Position</label>
         <div class="col-sm-10">
-            <select asp-for="@Model.Employee.Position" asp-items="ViewDataHelper.AllEmployeePositions()" id="employee-position" class="form-control"></select>
+            <select asp-for="@Model.Position" asp-items="ViewDataHelper.AllEmployeePositions()" id="employee-position" class="form-control"></select>
         </div>
     </div>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">Salary</label>
         <div class="col-sm-10">
-            <input asp-for="@Model.Employee.Salary" min="0" type="number" id="employee-salary" class="form-control" />
+            <input asp-for="@Model.Salary" min="0" step=".01" type="number" id="employee-salary" class="form-control" />
         </div>
     </div>
     <button type="submit" id="edit-employee-btn" class="btn btn-primary">Edit</button>
+    <input type="hidden" value="@Model.Id" id="employee-id"/>
 </form>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#edit-employee-btn").click(function(event){
+            event.preventDefault();
+            var projectId = $("#project-id").val();
+            var employeedId = $("#employee-id").val();
+
+            var formData = {
+                id: employeedId,
+                firstName: $("#employee-first-name").val(),
+                lastName: $("#employee-last-name").val(),
+                position: $("#employee-position").val(),
+                salary: $("#employee-salary").val(),
+            }
+
+            console.log(formData.salary);
+
+            $.ajax({
+                url: "Edit",
+                method: "POST",
+                dataType: "JSON",
+                data: formData,
+                success: function(data) {
+                    if (data.succeed == false) {
+                        alert(data.errorMessage);
+                        return;
+                    }
+
+                    window.location.href = `/Employees/All?projectId=${projectId}`
+                }
+            })
+        })
+    })
+</script>

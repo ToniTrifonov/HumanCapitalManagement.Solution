@@ -14,15 +14,18 @@ namespace HumanCapitalManagement.Web.Controllers
         private readonly IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult> employeesByProjectHandler;
         private readonly IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult> addEmployeeHandler;
         private readonly IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult> employeeByIdHandler;
+        private readonly IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult> editEmployeeHandler;
 
         public EmployeesController(
             IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult> employeesByProjectHandler,
             IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult> addEmployeeHandler,
-            IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult> employeeByIdHandler)
+            IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult> employeeByIdHandler,
+            IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult> editEmployeeHandler)
         {
             this.employeesByProjectHandler = employeesByProjectHandler;
             this.addEmployeeHandler = addEmployeeHandler;
             this.employeeByIdHandler = employeeByIdHandler;
+            this.editEmployeeHandler = editEmployeeHandler;
         }
 
         [HttpGet]
@@ -32,7 +35,6 @@ namespace HumanCapitalManagement.Web.Controllers
             var employeesResult = await this.employeesByProjectHandler.HandleAsync(employeesQuery);
 
             var viewModel = new AllEmployeesViewModel(employeesResult.Employees, projectId);
-
             return View("AllEmployees", viewModel);
         }
 
@@ -67,9 +69,37 @@ namespace HumanCapitalManagement.Web.Controllers
             var employeeByIdQuery = new EmployeeByIdQuery(id);
             var employeeByIdResult = await this.employeeByIdHandler.HandleAsync(employeeByIdQuery);
 
-            var editEmployeeModel = new EditEmployeeModel(employeeByIdResult.Employee);
+            var employee = employeeByIdResult.Employee;
+
+            var editEmployeeModel = new EditEmployeeModel()
+            {
+                Id = id,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                Salary = employee.Salary,
+                Position = employee.Position,
+            };
 
             return PartialView("_EditEmployee", editEmployeeModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditEmployeeModel inputModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errorMessage = ModelState.Values
+                    .SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage)
+                    .FirstOrDefault();
+
+                return Json(new { ErrorMessage = errorMessage, Succeed = false });
+            }
+
+            var editEmployeeCommand = new EditEmployeeCommand(inputModel.Id, inputModel.FirstName, inputModel.LastName, inputModel.Position, inputModel.Salary);
+            var editEmployeeResult = await this.editEmployeeHandler.HandleAsync(editEmployeeCommand);
+
+            return Json(new { editEmployeeResult.Succeed, editEmployeeResult.ErrorMessage });
         }
     }
 }

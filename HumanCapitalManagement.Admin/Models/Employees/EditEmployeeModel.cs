@@ -1,14 +1,21 @@
-﻿using HumanCapitalManagement.Contracts.Results.Employees;
+﻿using HumanCapitalManagement.Contracts.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace HumanCapitalManagement.Web.Models.Employees
 {
     public class EditEmployeeModel
     {
-        public EditEmployeeModel(EmployeeResultItem employee)
-        {
-            Employee = employee;
-        }
+        public string Id { get; set; }
 
-        public EmployeeResultItem Employee { get; }
+        [Required(ErrorMessage = "FirstName is required.", AllowEmptyStrings = false)]
+        public string FirstName { get; set; }
+
+        [Required(ErrorMessage = "LastName is required.", AllowEmptyStrings = false)]
+        public string LastName { get; set; }
+
+        public EmployeePosition Position { get; set; }
+
+        [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive number.")]
+        public decimal Salary { get; set; }
     }
 }
