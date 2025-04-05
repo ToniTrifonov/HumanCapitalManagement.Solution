@@ -15,17 +15,20 @@ namespace HumanCapitalManagement.Web.Controllers
         private readonly IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult> addEmployeeHandler;
         private readonly IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult> employeeByIdHandler;
         private readonly IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult> editEmployeeHandler;
+        private readonly IAsyncCommandHandler<DeleteEmployeeCommand, DeleteEmployeeResult> deleteEmployeeHandler;
 
         public EmployeesController(
             IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult> employeesByProjectHandler,
             IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult> addEmployeeHandler,
             IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult> employeeByIdHandler,
-            IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult> editEmployeeHandler)
+            IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult> editEmployeeHandler,
+            IAsyncCommandHandler<DeleteEmployeeCommand, DeleteEmployeeResult> deleteEmployeeHandler)
         {
             this.employeesByProjectHandler = employeesByProjectHandler;
             this.addEmployeeHandler = addEmployeeHandler;
             this.employeeByIdHandler = employeeByIdHandler;
             this.editEmployeeHandler = editEmployeeHandler;
+            this.deleteEmployeeHandler = deleteEmployeeHandler;
         }
 
         [HttpGet]
@@ -100,6 +103,15 @@ namespace HumanCapitalManagement.Web.Controllers
             var editEmployeeResult = await this.editEmployeeHandler.HandleAsync(editEmployeeCommand);
 
             return Json(new { editEmployeeResult.Succeed, editEmployeeResult.ErrorMessage });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var deleteEmployeeCommand = new DeleteEmployeeCommand(id);
+            var deleteEmployeeResult = await this.deleteEmployeeHandler.HandleAsync(deleteEmployeeCommand);
+
+            return Json(new { deleteEmployeeResult.Succeed, deleteEmployeeResult.ErrorMessage });
         }
     }
 }

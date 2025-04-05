@@ -20,6 +20,7 @@ namespace HumanCapitalManagement.Handlers.Queries.Employees
         {
             var employees = await this.context.Set<Employee>()
                 .Where(employee => employee.ProjectId == query.ProjectId)
+                .Where(employee => !employee.IsDeleted)
                 .Select(employee => new EmployeeResultItem(employee.Id, employee.FirstName, employee.LastName, employee.Position, employee.Salary))
                 .ToListAsync();
 

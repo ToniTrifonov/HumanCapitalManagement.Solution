@@ -19,6 +19,8 @@ namespace HumanCapitalManagement.Data.Entities
 
         public decimal Salary { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public string ProjectId { get; set; }
 
         public virtual Project Project { get; set; }
