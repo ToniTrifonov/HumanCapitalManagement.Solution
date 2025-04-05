@@ -43,10 +43,9 @@ namespace HumanCapitalManagement.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add(string projectId)
+        public IActionResult Add()
         {
-            ViewBag.ProjectId = projectId;
-            return View("AddEmployee");
+            return PartialView("_AddEmployee");
         }
 
         [HttpPost]

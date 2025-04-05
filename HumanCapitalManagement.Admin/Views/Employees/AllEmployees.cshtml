@@ -1,33 +1,66 @@
 ﻿@model HumanCapitalManagement.Web.Models.Employees.AllEmployeesViewModel
 
-<div>
-    <a type="button" class="btn-info" asp-controller="Employees" asp-action="Add" asp-route-projectid="@Model.ProjectId">Add Employee</a>
-    @if (!Model.Employees.Any())
-    {
-        <div>
-            <span class="text-info">No employees have been added yet.</span>
-        </div>
+<style>
+    #employees-container {
+        display: flex;
+        justify-content: space-evenly;
     }
-    else
-    {
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Salary</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var employee in Model.Employees)
-                {
+
+    #employees-table, #employee-form {
+        width: 45%;
+    }
+</style>
+
+<div id="employees-container">
+    <div id="employees-table">
+        <button id="add-employee-btn" type="button" class="btn-info">Add Employee</button>
+        @if (!Model.Employees.Any())
+        {
+            <div>
+                <span class="text-info">No employees have been added yet.</span>
+            </div>
+        }
+        else
+        {
+            <table class="table table-hover">
+                <thead>
                     <tr>
-                        <td>@employee.FirstName @employee.LastName</td>
-                        <td>@employee.Position.ToString()</td>
-                        <td>@employee.Salary</td>
+                        <th scope="col">Name</th>
+                        <th scope="col">Position</th>
+                        <th scope="col">Salary</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    }
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model.Employees)
+                    {
+                        <tr>
+                            <td>@employee.FirstName @employee.LastName</td>
+                            <td>@employee.Position.ToString()</td>
+                            <td>@employee.Salary</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <div id="employee-form">
+    </div>
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        $(document).ready(function() {
+            console.log("Document loaded.");
+
+            $("#add-employee-btn").click(function() {
+                $.ajax({
+                    method: "GET",
+                    url: "Add",
+                    success: function(htmlResult) {
+                        $("#employee-form").html(htmlResult);
+                    }
+                })
+            })
+        })
+    </script>
+}
