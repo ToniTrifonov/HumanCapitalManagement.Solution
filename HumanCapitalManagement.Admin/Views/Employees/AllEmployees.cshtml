@@ -13,7 +13,7 @@
 
 <div id="employees-container">
     <div id="employees-table">
-        <button id="load-add-employee-form-btn" type="button" class="btn-info">Add Employee</button>
+        <button id="load-add-employee-form-btn" type="button" class="btn btn-info">Add Employee</button>
         @if (!Model.Employees.Any())
         {
             <div>
@@ -38,8 +38,8 @@
                             <td>@employee.Position.ToString()</td>
                             <td>@employee.Salary</td>
                             <td>
-                                <button type="button" class="btn-warning load-edit-employee-form-btn" data-employee-id="@employee.Id">Edit</button>
-                                <button type="button" class="btn-danger delete-employee-btn" data-employee-id="@employee.Id">Delete</button>
+                                <button type="button" class="btn btn-warning load-edit-employee-form-btn" data-employee-id="@employee.Id">Edit</button>
+                                <button type="button" class="btn btn-danger delete-employee-btn" data-employee-id="@employee.Id">Delete</button>
                             </td>
                         </tr>
                     }
