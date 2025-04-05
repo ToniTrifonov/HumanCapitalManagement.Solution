@@ -13,7 +13,7 @@
 
 <div id="employees-container">
     <div id="employees-table">
-        <button id="add-employee-btn" type="button" class="btn-info">Add Employee</button>
+        <button id="load-add-employee-form-btn" type="button" class="btn-info">Add Employee</button>
         @if (!Model.Employees.Any())
         {
             <div>
@@ -45,14 +45,13 @@
     </div>
     <div id="employee-form">
     </div>
+    <input type="hidden" value="@Model.ProjectId" id="project-id" />
 </div>
 
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function() {
-            console.log("Document loaded.");
-
-            $("#add-employee-btn").click(function() {
+            $("#load-add-employee-form-btn").click(function() {
                 $.ajax({
                     method: "GET",
                     url: "Add",

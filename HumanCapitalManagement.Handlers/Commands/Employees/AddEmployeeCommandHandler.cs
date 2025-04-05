@@ -32,10 +32,11 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees
                 Position = command.Position,
                 ProjectId = command.ProjectId,
             };
+
             await this.context.Set<Employee>().AddAsync(newEmployee);
             await this.context.SaveChangesAsync();
 
-            return new AddEmployeeResult("Successfully added new employee.");
+            return new AddEmployeeResult();
         }
     }
 }

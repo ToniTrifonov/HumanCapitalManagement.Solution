@@ -14,7 +14,6 @@ namespace HumanCapitalManagement.Web.Models.Employees
         [Required(ErrorMessage = "Position is required.")]
         public EmployeePosition Position { get; set; }
 
-        [Required(ErrorMessage = "Salary is required.")]
         [Range(0, double.MaxValue, ErrorMessage = "Salary must be a positive number.")]
         public decimal Salary { get; set; }
 

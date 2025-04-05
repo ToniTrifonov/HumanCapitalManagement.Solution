@@ -1,35 +1,60 @@
 ﻿@using HumanCapitalManagement.Web.ViewHelpers
-@model HumanCapitalManagement.Web.Models.Employees.AddEmployeeInputModel
 
-<form asp-controller="Employees" asp-action="Add" method="post">
+<form>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">First Name</label>
         <div class="col-sm-10">
-            <input asp-for="@Model.FirstName" type="text" class="form-control" />
+            <input name="FirstName" id="employee-first-name" type="text" class="form-control" />
         </div>
-        <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
     </div>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">Last Name</label>
         <div class="col-sm-10">
-            <textarea asp-for="@Model.LastName" class="form-control"></textarea>
+            <input name="LastName" id="employee-last-name" class="form-control" />
         </div>
-        <span asp-validation-for="@Model.LastName" class="text-danger"></span>
     </div>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">Position</label>
         <div class="col-sm-10">
-            <select asp-items="ViewDataHelper.AllEmployeePositions()" asp-for="@Model.Position" class="form-control"></select>
+            <select name="Position" asp-items="ViewDataHelper.AllEmployeePositions()" id="employee-position" class="form-control"></select>
         </div>
-        <span asp-validation-for="@Model.Position" class="text-danger"></span>
     </div>
     <div class="row mb-3">
         <label class="col-sm-2 col-form-label">Salary</label>
         <div class="col-sm-10">
-            <textarea asp-for="@Model.Salary" class="form-control"></textarea>
+            <input name="Salary" min="0" type="number" id="employee-salary" class="form-control" />
         </div>
-        <span asp-validation-for="@Model.Salary" class="text-danger"></span>
     </div>
-    <input asp-for="@Model.ProjectId" type="hidden" value="@ViewBag.ProjectId" class="form-control" />
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" id="create-employee-btn" class="btn btn-primary">Add</button>
 </form>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#create-employee-btn").click(function(event){
+            event.preventDefault();
+
+            var formData = {
+                firstName: $("#employee-first-name").val(),
+                lastName: $("#employee-last-name").val(),
+                position: $("#employee-position").val(),
+                salary: $("#employee-salary").val(),
+                projectId: $("#project-id").val(),
+            }
+
+            $.ajax({
+                url: "Add",
+                method: "POST",
+                dataType: "JSON",
+                data: formData,
+                success: function(data) {
+                    if (data.succeed == false) {
+                        alert(data.errorMessage);
+                        return;
+                    }
+
+                    window.location.href = `/Employees/All?projectId=${formData.projectId}`
+                }
+            })
+        })
+    })
+</script>

@@ -2,11 +2,19 @@
 {
     public class AddEmployeeResult
     {
-        public AddEmployeeResult(string message)
+        public AddEmployeeResult(string errorMessage)
         {
-            Message = message;
+            ErrorMessage = errorMessage;
+            Succeed = false;
         }
 
-        public string Message { get; }
+        public AddEmployeeResult()
+        {
+            Succeed = true;
+        }
+
+        public string ErrorMessage { get; }
+
+        public bool Succeed { get; }
     }
 }
