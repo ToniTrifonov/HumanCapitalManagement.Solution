@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-HumanCapitalManagement.Admin-251aad6e-4339-43e0-b252-2888e846b50c</UserSecretsId>
   </PropertyGroup>
