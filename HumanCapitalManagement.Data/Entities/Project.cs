@@ -7,7 +7,7 @@ namespace HumanCapitalManagement.Data.Entities
         public Project()
         {
             Id = Guid.NewGuid().ToString();
-            Employees = new List<Employee>();
+            Employees = [];
         }
 
         public string Id { get; set; }
