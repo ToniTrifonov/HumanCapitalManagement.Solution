@@ -56,7 +56,13 @@ namespace HumanCapitalManagement.Web.Controllers
 
             var createProjectCommand = new CreateProjectCommand(
                 inputModel.Name, inputModel.Description, inputModel.Size, userId);
-            await this.createProjectHandler.HandleAsync(createProjectCommand);
+            var createProjectResult = await this.createProjectHandler.HandleAsync(createProjectCommand);
+
+            if (!createProjectResult.Succeed)
+            {
+                ViewBag.ErrorMessage = createProjectResult.ErrorMessage;
+                return View("CreateProject", inputModel);
+            }
 
             return RedirectToAction(nameof(All));
         }

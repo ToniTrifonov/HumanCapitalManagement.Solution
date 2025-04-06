@@ -30,8 +30,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>, CreateAccountCommandHandler>();
+
 builder.Services.AddScoped<IAsyncQueryHandler<ProjectsByUserIdQuery, ProjectsByUserIdResult>, ProjectsByUserIdQueryHandler>();
-builder.Services.AddScoped<IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>, CreateProjectCommandHandler>();
+builder.Services.AddScoped<CreateProjectCommandHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>>(sp =>
+{
+    var mainHandler = sp.GetRequiredService<CreateProjectCommandHandler>();
+    return new CreateProjectErrorHandler(mainHandler);
+});
+
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult>, EmployeesByProjectIdQueryHandler>();
 builder.Services.AddScoped<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>, AddEmployeeCommandHandler>();
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult>, EmployeeByIdQueryHandler>();
