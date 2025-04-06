@@ -1,11 +1,11 @@
 ﻿@using HumanCapitalManagement.Web.ViewHelpers
 @model HumanCapitalManagement.Web.Models.Projects.CreateProjectInputModel
 
-<form asp-controller="Projects" asp-action="Create" method="post">
+<form class="mt-5 w-50 m-auto" asp-controller="Projects" asp-action="Create" method="post">
     @if (ViewBag.Message != null)
     {
         <div class="row mb-3">
-            <span class="text-info">@ViewBag.Message</span>
+            <span class="fw-semibold">@ViewBag.Message</span>
         </div>
     }
     <div class="row mb-3">
@@ -29,5 +29,5 @@
         </div>
         <span asp-validation-for="@Model.Size" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-dark mt-3 float-end fw-semibold">Create</button>
 </form>
