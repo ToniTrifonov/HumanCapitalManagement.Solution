@@ -11,43 +11,48 @@
     }
 </style>
 
-<div id="employees-container">
-    <div id="employees-table">
-        <button id="load-add-employee-form-btn" type="button" class="btn btn-info">Add Employee</button>
-        @if (!Model.Employees.Any())
-        {
-            <div>
-                <span class="text-info">No employees have been added yet.</span>
-            </div>
-        }
-        else
-        {
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Position</th>
-                        <th scope="col">Salary</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var employee in Model.Employees)
-                    {
+<div class="mt-5">
+    <h1 class="fw-semibold text-center mb-5">Project Employees</h1>
+    <div id="employees-container">
+        <div id="employees-table">
+            @if (!Model.Employees.Any())
+            {
+                <div class="d-flex align-items-center flex-column">
+                    <span class="text-dark fw-semibold">No employees have been added yet.</span>
+                    <button type="button" class="btn btn-dark float-end fw-semibold load-add-employee-form-btn mt-3">Add Employee</button>
+                </div>
+            }
+            else
+            {
+                <table class="table table-bordered border-dark table-hover text-center">
+                    <thead>
                         <tr>
-                            <td>@employee.FirstName @employee.LastName</td>
-                            <td>@employee.Position.ToString()</td>
-                            <td>@employee.Salary</td>
-                            <td>
-                                <button type="button" class="btn btn-warning load-edit-employee-form-btn" data-employee-id="@employee.Id">Edit</button>
-                                <button type="button" class="btn btn-danger delete-employee-btn" data-employee-id="@employee.Id">Delete</button>
-                            </td>
+                            <th scope="col">Name</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Salary</th>
+                            <th scope="col">Actions</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
-    <div id="employee-form">
+                    </thead>
+                    <tbody>
+                        @foreach (var employee in Model.Employees)
+                        {
+                            <tr>
+                                <td>@employee.FirstName @employee.LastName</td>
+                                <td>@employee.Position.ToString()</td>
+                                <td>@employee.Salary</td>
+                                <td>
+                                    <button type="button" class="btn btn-warning load-edit-employee-form-btn me-2 fw-semibold" data-employee-id="@employee.Id">Edit</button>
+                                    <button type="button" class="btn btn-danger delete-employee-btn fw-semibold" data-employee-id="@employee.Id">Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button type="button" class="btn btn-dark float-end fw-semibold load-add-employee-form-btn float-end">Add Employee</button>
+            }
+        </div>
+        <div id="employee-form">
+        </div>
     </div>
     <input type="hidden" value="@Model.ProjectId" id="project-id" />
 </div>
@@ -55,7 +60,7 @@
 @section scripts {
     <script type="text/javascript">
         $(document).ready(function() {
-            $("#load-add-employee-form-btn").click(function() {
+            $(".load-add-employee-form-btn").click(function() {
                 $.ajax({
                     method: "GET",
                     url: "Add",

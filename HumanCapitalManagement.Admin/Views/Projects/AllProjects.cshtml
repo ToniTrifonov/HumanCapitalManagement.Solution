@@ -1,6 +1,7 @@
 ﻿@model HumanCapitalManagement.Web.Models.Projects.AllProjectsViewModel
 
 <div class="mt-5">
+    <h1 class="fw-semibold text-center mb-5">All Projects</h1>
     @if (!Model.Projects.Any())
     {
         <div class="d-flex align-items-center flex-column">
@@ -10,8 +11,7 @@
     }
     else
     {
-        <a class="btn btn-dark fw-semibold" asp-controller="Projects" asp-action="Create">New Project</a>
-        <table class="table border-dark table-bordered table-hover mt-3">
+        <table class="table border-dark table-bordered table-hover mt-3 text-center">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -32,5 +32,6 @@
                 }
             </tbody>
         </table>
+        <a class="btn btn-dark fw-semibold float-end" asp-controller="Projects" asp-action="Create">New Project</a>
     }
 </div>

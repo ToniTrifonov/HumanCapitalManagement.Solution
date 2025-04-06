@@ -1,7 +1,8 @@
 ﻿@using HumanCapitalManagement.Web.ViewHelpers
 @model HumanCapitalManagement.Web.Models.Accounts.CreateAccountModel
 
-<form asp-controller="Accounts" asp-action="Create" method="post" >
+<h1 class="fw-semibold mb-3 text-center mt-5">Create Account</h1>
+<form class="w-50 m-auto mt-5" asp-controller="Accounts" asp-action="Create" method="post" >
     @if (ViewBag.Message != null)
     {
         <div class="row mb-3">
@@ -36,5 +37,5 @@
         </div>
         <span asp-validation-for="@Model.Role" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-dark fw-semibold float-end">Create</button>
 </form>
