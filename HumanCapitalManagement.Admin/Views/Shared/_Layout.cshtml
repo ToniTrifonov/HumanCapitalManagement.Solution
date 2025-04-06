@@ -13,29 +13,19 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HumanCapitalManagement.Admin</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (User.IsInRole(UserRole.Admin.ToString()))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Accounts" asp-action="Create">Create Account</a>
-                            </li>
-                        }
-                        @if (User.IsInRole(UserRole.ProjectManager.ToString()))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Projects" asp-action="All">Projects</a>
-                            </li>
-                        }
-                    </ul>
-                    <partial name="_LoginPartial" />
+            <div class="container-fluid navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    @if (User.IsInRole(UserRole.Admin.ToString()))
+                    {
+                        <a class="navbar-brand" asp-controller="Accounts" asp-action="Create">Create Account</a>
+                    }
+                    @if (User.IsInRole(UserRole.ProjectManager.ToString()))
+                    {
+                        <a class="navbar-brand" asp-controller="Projects" asp-action="All">Projects</a>
+                    }
                 </div>
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
