@@ -9,8 +9,9 @@ using HumanCapitalManagement.Contracts.Results.Accounts;
 using HumanCapitalManagement.Contracts.Results.Employees;
 using HumanCapitalManagement.Contracts.Results.Projects;
 using HumanCapitalManagement.Handlers.Commands.Accounts;
-using HumanCapitalManagement.Handlers.Commands.Employees;
 using HumanCapitalManagement.Handlers.Commands.Employees.Add;
+using HumanCapitalManagement.Handlers.Commands.Employees.Delete;
+using HumanCapitalManagement.Handlers.Commands.Employees.Edit;
 using HumanCapitalManagement.Handlers.Commands.Projects;
 using HumanCapitalManagement.Handlers.Queries.Employees;
 using HumanCapitalManagement.Handlers.Queries.Projects;
@@ -59,9 +60,19 @@ builder.Services.AddScoped<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeR
 
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult>, EmployeeByIdQueryHandler>();
 
-builder.Services.AddScoped<IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>, EditEmployeeCommandHandler>();
+builder.Services.AddScoped<EditEmployeeCommandHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>>(sp =>
+{
+    var mainHandler = sp.GetRequiredService<EditEmployeeCommandHandler>();
+    return new EditEmployeeErrorHandler(mainHandler);
+});
 
-builder.Services.AddScoped<IAsyncCommandHandler<DeleteEmployeeCommand, DeleteEmployeeResult>, DeleteEmployeeCommandHandler>();
+builder.Services.AddScoped<DeleteEmployeeCommandHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<DeleteEmployeeCommand, DeleteEmployeeResult>>(sp =>
+{
+    var mainHandler = sp.GetRequiredService<DeleteEmployeeCommandHandler>();
+    return new DeleteEmployeeErrorHandler(mainHandler);
+});
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {

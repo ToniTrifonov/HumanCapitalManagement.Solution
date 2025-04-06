@@ -5,7 +5,7 @@ using HumanCapitalManagement.Contracts.Results.Employees;
 using HumanCapitalManagement.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HumanCapitalManagement.Handlers.Commands.Employees
+namespace HumanCapitalManagement.Handlers.Commands.Employees.Edit
 {
     public class EditEmployeeCommandHandler : IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>
     {
@@ -18,7 +18,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees
 
         public async Task<EditEmployeeResult> HandleAsync(EditEmployeeCommand command)
         {
-            var employee = await this.context.Set<Employee>().FirstOrDefaultAsync(employee => employee.Id == command.Id);
+            var employee = await context.Set<Employee>().FirstOrDefaultAsync(employee => employee.Id == command.Id);
             if (employee == null)
             {
                 return new EditEmployeeResult("Employee does not exist.");
@@ -29,7 +29,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees
             employee.Salary = command.Salary;
             employee.Position = command.Position;
 
-            await this.context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return new EditEmployeeResult();
         }
     }

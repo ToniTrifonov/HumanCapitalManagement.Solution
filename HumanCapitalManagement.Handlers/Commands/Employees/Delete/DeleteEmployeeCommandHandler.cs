@@ -5,7 +5,7 @@ using HumanCapitalManagement.Contracts.Results.Employees;
 using HumanCapitalManagement.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HumanCapitalManagement.Handlers.Commands.Employees
+namespace HumanCapitalManagement.Handlers.Commands.Employees.Delete
 {
     public class DeleteEmployeeCommandHandler : IAsyncCommandHandler<DeleteEmployeeCommand, DeleteEmployeeResult>
     {
@@ -17,7 +17,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees
         }
         public async Task<DeleteEmployeeResult> HandleAsync(DeleteEmployeeCommand command)
         {
-            var employee = await this.context.Set<Employee>().FirstOrDefaultAsync(employee => employee.Id == command.Id);
+            var employee = await context.Set<Employee>().FirstOrDefaultAsync(employee => employee.Id == command.Id);
             if (employee == null)
             {
                 return new DeleteEmployeeResult("An employee with that id does not exist.");
@@ -25,7 +25,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees
 
             employee.IsDeleted = true;
 
-            await this.context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return new DeleteEmployeeResult();
         }
     }
