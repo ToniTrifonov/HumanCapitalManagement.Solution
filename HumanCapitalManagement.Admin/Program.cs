@@ -10,11 +10,14 @@ using HumanCapitalManagement.Contracts.Results.Employees;
 using HumanCapitalManagement.Contracts.Results.Projects;
 using HumanCapitalManagement.Handlers.Commands.Accounts;
 using HumanCapitalManagement.Handlers.Commands.Employees;
+using HumanCapitalManagement.Handlers.Commands.Employees.Add;
 using HumanCapitalManagement.Handlers.Commands.Projects;
 using HumanCapitalManagement.Handlers.Queries.Employees;
 using HumanCapitalManagement.Handlers.Queries.Projects;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,13 +50,26 @@ builder.Services.AddScoped<IAsyncCommandHandler<CreateProjectCommand, CreateProj
 
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult>, EmployeesByProjectIdQueryHandler>();
 
-builder.Services.AddScoped<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>, AddEmployeeCommandHandler>();
+builder.Services.AddScoped<AddEmployeeCommandHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>>(sp =>
+{
+    var mainHandler = sp.GetRequiredService<AddEmployeeCommandHandler>();
+    return new AddEmployeeErrorHandler(mainHandler);
+});
 
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult>, EmployeeByIdQueryHandler>();
 
 builder.Services.AddScoped<IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>, EditEmployeeCommandHandler>();
 
 builder.Services.AddScoped<IAsyncCommandHandler<DeleteEmployeeCommand, DeleteEmployeeResult>, DeleteEmployeeCommandHandler>();
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[] { new CultureInfo("en-US") };
+    options.DefaultRequestCulture = new RequestCulture("en-US");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
 
 var app = builder.Build();
 
@@ -69,6 +85,7 @@ else
     app.UseHsts();
 }
 
+app.UseRequestLocalization();
 
 app.MapGet("/Identity/Account/Register", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));
 app.MapPost("/Identity/Account/Register", context => Task.Factory.StartNew(() => context.Response.Redirect("/Identity/Account/Login", true, true)));

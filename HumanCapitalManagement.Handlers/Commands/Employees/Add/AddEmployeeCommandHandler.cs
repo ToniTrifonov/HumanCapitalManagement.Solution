@@ -5,7 +5,7 @@ using HumanCapitalManagement.Contracts.Results.Employees;
 using HumanCapitalManagement.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace HumanCapitalManagement.Handlers.Commands.Employees
+namespace HumanCapitalManagement.Handlers.Commands.Employees.Add
 {
     public class AddEmployeeCommandHandler : IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>
     {
@@ -18,7 +18,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees
 
         public async Task<AddEmployeeResult> HandleAsync(AddEmployeeCommand command)
         {
-            var projectExists = await this.context.Set<Project>().AnyAsync(project => project.Id == command.ProjectId);
+            var projectExists = await context.Set<Project>().AnyAsync(project => project.Id == command.ProjectId);
             if (!projectExists)
             {
                 return new AddEmployeeResult("Invalid project.");
@@ -33,8 +33,8 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees
                 ProjectId = command.ProjectId,
             };
 
-            await this.context.Set<Employee>().AddAsync(newEmployee);
-            await this.context.SaveChangesAsync();
+            await context.Set<Employee>().AddAsync(newEmployee);
+            await context.SaveChangesAsync();
 
             return new AddEmployeeResult();
         }
