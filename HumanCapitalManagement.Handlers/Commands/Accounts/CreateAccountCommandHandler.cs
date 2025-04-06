@@ -21,7 +21,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Accounts
             var emailInUse = await this.context.Set<IdentityUser>().AnyAsync(user => user.Email == command.Email);
             if (emailInUse)
             {
-                return new CreateAccountResult("Email already in use.");
+                return new CreateAccountResult("Email already in use.", succeed: false);
             }
 
             var roleId = await this.context.Set<IdentityRole>()
@@ -30,7 +30,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Accounts
                 .FirstOrDefaultAsync();
             if (roleId == null)
             {
-                return new CreateAccountResult("Role does not exist.");
+                return new CreateAccountResult("Role does not exist.", succeed: false);
             }
 
             var newAccount = new IdentityUser()
@@ -56,7 +56,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Accounts
 
             await this.context.SaveChangesAsync();
 
-            return new CreateAccountResult("Account successfully created.");
+            return new CreateAccountResult("Account successfully created.", succeed: true);
         }
     }
 }

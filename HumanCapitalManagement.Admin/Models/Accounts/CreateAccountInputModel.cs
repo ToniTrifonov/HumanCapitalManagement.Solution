@@ -2,7 +2,7 @@
 
 namespace HumanCapitalManagement.Web.Models.Accounts
 {
-    public class CreateAccountModel
+    public class CreateAccountInputModel
     {
         [Required(ErrorMessage = "Email address is required.")]
         [EmailAddress(ErrorMessage = "Please provide a valid email address.")]

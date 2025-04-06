@@ -24,16 +24,18 @@ namespace HumanCapitalManagement.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateAccountModel input)
+        public async Task<IActionResult> Create(CreateAccountInputModel input)
         {
             if (!ModelState.IsValid)
             {
-                return View(input);
+                return View("CreateAccount", input);
             }
 
             var createAccountCommand = new CreateAccountCommand(input.Email, input.Password, input.Role);
             var createAccountResult = await this.createAccountHandler.HandleAsync(createAccountCommand);
+
             ViewData["Message"] = createAccountResult.Message;
+            ViewData["Succeed"] = createAccountResult.Succeed;
 
             return View("CreateAccount", input);
         }

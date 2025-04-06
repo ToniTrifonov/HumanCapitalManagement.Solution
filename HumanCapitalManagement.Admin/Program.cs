@@ -29,9 +29,15 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>, CreateAccountCommandHandler>();
+builder.Services.AddScoped<CreateAccountCommandHandler>();
+builder.Services.AddScoped<IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>>(sp =>
+{
+    var mainHandler = sp.GetRequiredService<CreateAccountCommandHandler>();
+    return new CreateAccountErrorHandler(mainHandler);
+});
 
 builder.Services.AddScoped<IAsyncQueryHandler<ProjectsByUserIdQuery, ProjectsByUserIdResult>, ProjectsByUserIdQueryHandler>();
+
 builder.Services.AddScoped<CreateProjectCommandHandler>();
 builder.Services.AddScoped<IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>>(sp =>
 {
@@ -40,9 +46,13 @@ builder.Services.AddScoped<IAsyncCommandHandler<CreateProjectCommand, CreateProj
 });
 
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeesByProjectIdQuery, EmployeesByProjectIdResult>, EmployeesByProjectIdQueryHandler>();
+
 builder.Services.AddScoped<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>, AddEmployeeCommandHandler>();
+
 builder.Services.AddScoped<IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult>, EmployeeByIdQueryHandler>();
+
 builder.Services.AddScoped<IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>, EditEmployeeCommandHandler>();
+
 builder.Services.AddScoped<IAsyncCommandHandler<DeleteEmployeeCommand, DeleteEmployeeResult>, DeleteEmployeeCommandHandler>();
 
 var app = builder.Build();
