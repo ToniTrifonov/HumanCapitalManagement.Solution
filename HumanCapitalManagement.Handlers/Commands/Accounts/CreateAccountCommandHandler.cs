@@ -1,33 +1,35 @@
 ﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Accounts;
+using HumanCapitalManagement.Contracts.Queries.Passwords;
 using HumanCapitalManagement.Contracts.Results.Accounts;
-using HumanCapitalManagement.Data.Data;
+using HumanCapitalManagement.Contracts.Results.Passwords;
+using HumanCapitalManagement.Data.Contracts;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
 namespace HumanCapitalManagement.Handlers.Commands.Accounts
 {
     public class CreateAccountCommandHandler : IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>
     {
-        private readonly ApplicationDbContext context;
+        private readonly IDatabaseContext context;
+        private readonly IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult> passwordHasher;
 
-        public CreateAccountCommandHandler(ApplicationDbContext context)
+        public CreateAccountCommandHandler(
+            IDatabaseContext context,
+            IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult> passwordHasher)
         {
             this.context = context;
+            this.passwordHasher = passwordHasher;
         }
 
         public async Task<CreateAccountResult> HandleAsync(CreateAccountCommand command)
         {
-            var emailInUse = await this.context.Set<IdentityUser>().AnyAsync(user => user.Email == command.Email);
+            var emailInUse = await this.context.UserEmailInUse(command.Email);
             if (emailInUse)
             {
                 return new CreateAccountResult("Email already in use.", succeed: false);
             }
 
-            var roleId = await this.context.Set<IdentityRole>()
-                .Where(x => x.Name == command.Role)
-                .Select(x => x.Id)
-                .FirstOrDefaultAsync();
+            var roleId = await this.context.RoleIdByName(command.Role);
             if (roleId == null)
             {
                 return new CreateAccountResult("Role does not exist.", succeed: false);
@@ -43,17 +45,11 @@ namespace HumanCapitalManagement.Handlers.Commands.Accounts
                 EmailConfirmed = true
             };
 
-            var passwordHasher = new PasswordHasher<IdentityUser>();
-            var hashedPassword = passwordHasher.HashPassword(newAccount, command.Password);
-            newAccount.PasswordHash = hashedPassword;
+            var getHashedPassQuery = new GetHashedPasswordQuery(newAccount, command.Password);
+            var getHashedPasswordResult = await this.passwordHasher.HandleAsync(getHashedPassQuery);
+            newAccount.PasswordHash = getHashedPasswordResult.HashedPassword;
 
-            await this.context.Set<IdentityUser>().AddAsync(newAccount);
-            await this.context.Set<IdentityUserRole<string>>().AddAsync(new IdentityUserRole<string>()
-            {
-                RoleId = roleId,
-                UserId = newAccount.Id
-            });
-
+            await this.context.AddUser(newAccount, roleId);
             await this.context.SaveChangesAsync();
 
             return new CreateAccountResult("Account successfully created.", succeed: true);
