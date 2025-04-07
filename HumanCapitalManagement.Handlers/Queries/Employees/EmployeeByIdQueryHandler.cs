@@ -17,7 +17,7 @@ namespace HumanCapitalManagement.Handlers.Queries.Employees
         public async Task<EmployeeByIdResult> HandleAsync(EmployeeByIdQuery query)
         {
             var employee = await this.repository.EmployeeById(query.Id);
-            var employeeResult = new EmployeeResultItem(employee.Id, employee.FirstName, employee.LastName, employee.Position, employee.Salary)
+            var employeeResult = new EmployeeResultItem(employee.Id, employee.FirstName, employee.LastName, employee.Position, employee.Salary);
 
             return new EmployeeByIdResult(employeeResult);
         }
