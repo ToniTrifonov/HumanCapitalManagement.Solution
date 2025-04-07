@@ -1,9 +1,8 @@
 ﻿using HumanCapitalManagement.Data.Entities;
-using HumanCapitalManagement.Web.Data;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace HumanCapitalManagement.Admin.Data
+namespace HumanCapitalManagement.Data.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

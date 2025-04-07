@@ -1,4 +1,4 @@
-using HumanCapitalManagement.Admin.Data;
+using HumanCapitalManagement.Data.Data;
 using HumanCapitalManagement.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;

@@ -1,7 +1,7 @@
-﻿using HumanCapitalManagement.Admin.Data;
-using HumanCapitalManagement.Contracts;
+﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Accounts;
 using HumanCapitalManagement.Contracts.Results.Accounts;
+using HumanCapitalManagement.Data.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,7 +1,7 @@
-﻿using HumanCapitalManagement.Admin.Data;
-using HumanCapitalManagement.Contracts;
+﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Employees;
 using HumanCapitalManagement.Contracts.Results.Employees;
+using HumanCapitalManagement.Data.Data;
 using HumanCapitalManagement.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-﻿using HumanCapitalManagement.Contracts.Enums;
+﻿using HumanCapitalManagement.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace HumanCapitalManagement.Web.Models.Employees

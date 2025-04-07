@@ -1,4 +1,4 @@
-﻿namespace HumanCapitalManagement.Contracts.Enums
+﻿namespace HumanCapitalManagement.Data.Enums
 {
     public enum UserRole
     {

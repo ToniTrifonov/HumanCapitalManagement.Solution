@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace HumanCapitalManagement.Web.Data
+namespace HumanCapitalManagement.Data.Data
 {
     public class DatabaseSeeder
     {
@@ -70,13 +70,13 @@ namespace HumanCapitalManagement.Web.Data
 
             foreach (var role in roles)
             {
-                if (!(await context.Set<IdentityRole>().AnyAsync(r => r.Name == role.Name)))
+                if (!await context.Set<IdentityRole>().AnyAsync(r => r.Name == role.Name))
                 {
                     await context.Set<IdentityRole>().AddAsync(role);
                 }
             }
 
-            if (!(await context.Set<IdentityUser>().AnyAsync(u => u.UserName == user.UserName)))
+            if (!await context.Set<IdentityUser>().AnyAsync(u => u.UserName == user.UserName))
             {
                 var password = new PasswordHasher<IdentityUser>();
                 var hashed = password.HashPassword(user, "Test123!");
