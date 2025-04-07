@@ -10,26 +10,26 @@ namespace HumanCapitalManagement.Handlers.Commands.Accounts
 {
     public class CreateAccountCommandHandler : IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>
     {
-        private readonly IDatabaseContext context;
+        private readonly IApplicationRepository repository;
         private readonly IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult> passwordHasher;
 
         public CreateAccountCommandHandler(
-            IDatabaseContext context,
+            IApplicationRepository repository,
             IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult> passwordHasher)
         {
-            this.context = context;
+            this.repository = repository;
             this.passwordHasher = passwordHasher;
         }
 
         public async Task<CreateAccountResult> HandleAsync(CreateAccountCommand command)
         {
-            var emailInUse = await this.context.UserEmailInUse(command.Email);
+            var emailInUse = await this.repository.UserEmailInUse(command.Email);
             if (emailInUse)
             {
                 return new CreateAccountResult("Email already in use.", succeed: false);
             }
 
-            var roleId = await this.context.RoleIdByName(command.Role);
+            var roleId = await this.repository.RoleIdByName(command.Role);
             if (roleId == null)
             {
                 return new CreateAccountResult("Role does not exist.", succeed: false);
@@ -49,8 +49,8 @@ namespace HumanCapitalManagement.Handlers.Commands.Accounts
             var getHashedPasswordResult = await this.passwordHasher.HandleAsync(getHashedPassQuery);
             newAccount.PasswordHash = getHashedPasswordResult.HashedPassword;
 
-            await this.context.AddUser(newAccount, roleId);
-            await this.context.SaveChangesAsync();
+            await this.repository.AddUser(newAccount, roleId);
+            await this.repository.SaveChangesAsync();
 
             return new CreateAccountResult("Account successfully created.", succeed: true);
         }

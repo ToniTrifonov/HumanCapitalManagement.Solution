@@ -2,7 +2,7 @@
 
 namespace HumanCapitalManagement.Data.Contracts
 {
-    public interface IDatabaseContext
+    public interface IApplicationRepository
     {
         Task<bool> UserEmailInUse(string email);
 

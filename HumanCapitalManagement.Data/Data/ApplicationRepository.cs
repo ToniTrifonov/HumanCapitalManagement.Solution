@@ -4,17 +4,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HumanCapitalManagement.Data.Data
 {
-    public class DatabaseContext : ApplicationDbContext, IDatabaseContext
+    public class ApplicationRepository : IApplicationRepository
     {
-        public DatabaseContext(DbContextOptions<ApplicationDbContext> options) 
-            : base(options)
+        private readonly ApplicationDbContext context;
+
+        public ApplicationRepository(ApplicationDbContext context)
         {
+            this.context = context;
         }
 
         public async Task AddUser(IdentityUser user, string roleId)
         {
-            await this.Set<IdentityUser>().AddAsync(user);
-            await this.Set<IdentityUserRole<string>>().AddAsync(new IdentityUserRole<string>()
+            await this.context.Set<IdentityUser>().AddAsync(user);
+            await this.context.Set<IdentityUserRole<string>>().AddAsync(new IdentityUserRole<string>()
             {
                 UserId = user.Id,
                 RoleId = roleId
@@ -23,7 +25,7 @@ namespace HumanCapitalManagement.Data.Data
 
         public async Task<string> RoleIdByName(string roleName)
         {
-            return await this.Set<IdentityRole>()
+            return await this.context.Set<IdentityRole>()
                 .Where(role => role.Name == roleName)
                 .Select(role => role.Id)
                 .FirstOrDefaultAsync();
@@ -31,12 +33,12 @@ namespace HumanCapitalManagement.Data.Data
 
         public async Task<int> SaveChangesAsync()
         {
-            return await base.SaveChangesAsync();
+            return await this.context.SaveChangesAsync();
         }
 
         public async Task<bool> UserEmailInUse(string email)
         {
-            return await this.Set<IdentityUser>().AnyAsync(user => user.Email == email);
+            return await this.context.Set<IdentityUser>().AnyAsync(user => user.Email == email);
         }
     }
 }

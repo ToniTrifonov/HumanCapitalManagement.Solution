@@ -23,7 +23,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
+builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
 builder.Services.AddSingleton<IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult>, GetHashedPasswordQueryHandler>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
