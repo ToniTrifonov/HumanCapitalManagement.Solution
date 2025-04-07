@@ -7,9 +7,9 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees.Edit
 {
     public class EditEmployeeCommandHandler : IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>
     {
-        private readonly IApplicationRepository repository;
+        private readonly IEmployeesRepository repository;
 
-        public EditEmployeeCommandHandler(IApplicationRepository repository)
+        public EditEmployeeCommandHandler(IEmployeesRepository repository)
         {
             this.repository = repository;
         }
@@ -22,12 +22,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees.Edit
                 return new EditEmployeeResult("Employee does not exist.");
             }
 
-            employee.FirstName = command.FirstName;
-            employee.LastName = command.LastName;
-            employee.Salary = command.Salary;
-            employee.Position = command.Position;
-
-            await this.repository.SaveChangesAsync();
+            await this.repository.EditEmployee(command.Id, command.FirstName, command.LastName, command.Salary, command.Position);
             return new EditEmployeeResult();
         }
     }

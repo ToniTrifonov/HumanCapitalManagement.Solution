@@ -8,16 +8,20 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees.Add
 {
     public class AddEmployeeCommandHandler : IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>
     {
-        private readonly IApplicationRepository repository;
+        private readonly IEmployeesRepository employeesRepository;
+        private readonly IProjectsRepository projectsRepository;
 
-        public AddEmployeeCommandHandler(IApplicationRepository repository)
+        public AddEmployeeCommandHandler(
+            IEmployeesRepository employeesRepository, 
+            IProjectsRepository projectsRepository)
         {
-            this.repository = repository;
+            this.employeesRepository = employeesRepository;
+            this.projectsRepository = projectsRepository;
         }
 
         public async Task<AddEmployeeResult> HandleAsync(AddEmployeeCommand command)
         {
-            var projectExists = await this.repository.ProjectExists(command.ProjectId);
+            var projectExists = await this.projectsRepository.ProjectExists(command.ProjectId);
             if (!projectExists)
             {
                 return new AddEmployeeResult("Invalid project.");
@@ -32,8 +36,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees.Add
                 ProjectId = command.ProjectId,
             };
 
-            await this.repository.AddEmployee(newEmployee);
-            await this.repository.SaveChangesAsync();
+            await this.employeesRepository.Add(newEmployee);
 
             return new AddEmployeeResult();
         }

@@ -8,9 +8,9 @@ namespace HumanCapitalManagement.Handlers.Commands.Projects
 {
     public class CreateProjectCommandHandler : IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>
     {
-        private readonly IApplicationRepository repository;
+        private readonly IProjectsRepository repository;
 
-        public CreateProjectCommandHandler(IApplicationRepository repository)
+        public CreateProjectCommandHandler(IProjectsRepository repository)
         {
             this.repository = repository;
         }
@@ -25,9 +25,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Projects
                 CreateDate = DateTime.UtcNow,
             };
 
-            await this.repository.AddProject(newProject);
-            await this.repository.SaveChangesAsync();
-
+            await this.repository.Add(newProject);
             return new CreateProjectResult();
         }
     }

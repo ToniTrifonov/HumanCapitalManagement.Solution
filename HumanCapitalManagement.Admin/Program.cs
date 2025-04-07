@@ -3,6 +3,7 @@ using HumanCapitalManagement.Contracts.Queries.Passwords;
 using HumanCapitalManagement.Contracts.Results.Passwords;
 using HumanCapitalManagement.Data.Contracts;
 using HumanCapitalManagement.Data.Data;
+using HumanCapitalManagement.Data.Repositories;
 using HumanCapitalManagement.Handlers.Queries.Passwords;
 using HumanCapitalManagement.Web.Extensions;
 using Microsoft.AspNetCore.Identity;
@@ -23,7 +24,12 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
+builder.Services.AddScoped<IAccountsRepository, AccountsRepository>();
+builder.Services.AddScoped<IEmployeesRepository, EmployeesRepository>();
+builder.Services.AddScoped<IProjectsRepository, ProjectsRepository>();
+builder.Services.AddScoped<IRolesRepository, RolesRepository>();
+builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
+
 builder.Services.AddSingleton<IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult>, GetHashedPasswordQueryHandler>();
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>

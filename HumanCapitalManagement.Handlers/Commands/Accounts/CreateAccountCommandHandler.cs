@@ -10,26 +10,32 @@ namespace HumanCapitalManagement.Handlers.Commands.Accounts
 {
     public class CreateAccountCommandHandler : IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>
     {
-        private readonly IApplicationRepository repository;
+        private readonly IAccountsRepository accountsRepository;
+        private readonly IRolesRepository rolesRepository;
+        private readonly IAccountRoleRepository accountRoleRepository;
         private readonly IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult> passwordHasher;
 
         public CreateAccountCommandHandler(
-            IApplicationRepository repository,
+            IAccountsRepository accountsRepository,
+            IRolesRepository rolesRepository,
+            IAccountRoleRepository accountRoleRepository,
             IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult> passwordHasher)
         {
-            this.repository = repository;
+            this.accountsRepository = accountsRepository;
+            this.rolesRepository = rolesRepository;
+            this.accountRoleRepository = accountRoleRepository;
             this.passwordHasher = passwordHasher;
         }
 
         public async Task<CreateAccountResult> HandleAsync(CreateAccountCommand command)
         {
-            var emailInUse = await this.repository.UserEmailInUse(command.Email);
+            var emailInUse = await this.accountsRepository.UserEmailInUse(command.Email);
             if (emailInUse)
             {
                 return new CreateAccountResult("Email already in use.", succeed: false);
             }
 
-            var roleId = await this.repository.RoleIdByName(command.Role);
+            var roleId = await this.rolesRepository.RoleIdByName(command.Role);
             if (roleId == null)
             {
                 return new CreateAccountResult("Role does not exist.", succeed: false);
@@ -45,12 +51,18 @@ namespace HumanCapitalManagement.Handlers.Commands.Accounts
                 EmailConfirmed = true
             };
 
+            var newAccountRole = new IdentityUserRole<string>()
+            {
+                RoleId = roleId,
+                UserId = newAccount.Id
+            };
+
             var getHashedPassQuery = new GetHashedPasswordQuery(newAccount, command.Password);
             var getHashedPasswordResult = await this.passwordHasher.HandleAsync(getHashedPassQuery);
             newAccount.PasswordHash = getHashedPasswordResult.HashedPassword;
 
-            await this.repository.AddUser(newAccount, roleId);
-            await this.repository.SaveChangesAsync();
+            await this.accountsRepository.Add(newAccount);
+            await this.accountRoleRepository.Add(newAccountRole);
 
             return new CreateAccountResult("Account successfully created.", succeed: true);
         }

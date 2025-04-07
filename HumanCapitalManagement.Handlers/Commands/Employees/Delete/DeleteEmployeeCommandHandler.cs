@@ -7,9 +7,9 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees.Delete
 {
     public class DeleteEmployeeCommandHandler : IAsyncCommandHandler<DeleteEmployeeCommand, DeleteEmployeeResult>
     {
-        private readonly IApplicationRepository repository;
+        private readonly IEmployeesRepository repository;
 
-        public DeleteEmployeeCommandHandler(IApplicationRepository repository)
+        public DeleteEmployeeCommandHandler(IEmployeesRepository repository)
         {
             this.repository = repository;
         }
@@ -21,9 +21,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees.Delete
                 return new DeleteEmployeeResult("An employee with that id does not exist.");
             }
 
-            employee.IsDeleted = true;
-
-            await this.repository.SaveChangesAsync();
+            await this.repository.DeleteEmployee(command.Id);
             return new DeleteEmployeeResult();
         }
     }

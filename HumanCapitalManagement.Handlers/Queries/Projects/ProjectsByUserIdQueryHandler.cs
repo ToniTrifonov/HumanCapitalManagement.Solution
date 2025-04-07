@@ -7,9 +7,9 @@ namespace HumanCapitalManagement.Handlers.Queries.Projects
 {
     public class ProjectsByUserIdQueryHandler : IAsyncQueryHandler<ProjectsByUserIdQuery, ProjectsByUserIdResult>
     {
-        private readonly IApplicationRepository repository;
+        private readonly IProjectsRepository repository;
 
-        public ProjectsByUserIdQueryHandler(IApplicationRepository repository)
+        public ProjectsByUserIdQueryHandler(IProjectsRepository repository)
         {
             this.repository = repository;
         }
