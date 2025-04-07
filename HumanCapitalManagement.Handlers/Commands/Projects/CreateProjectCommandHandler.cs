@@ -1,18 +1,18 @@
 ﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Projects;
 using HumanCapitalManagement.Contracts.Results.Projects;
-using HumanCapitalManagement.Data.Data;
+using HumanCapitalManagement.Data.Contracts;
 using HumanCapitalManagement.Data.Entities;
 
 namespace HumanCapitalManagement.Handlers.Commands.Projects
 {
     public class CreateProjectCommandHandler : IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationRepository repository;
 
-        public CreateProjectCommandHandler(ApplicationDbContext context)
+        public CreateProjectCommandHandler(IApplicationRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
         public async Task<CreateProjectResult> HandleAsync(CreateProjectCommand command)
         {
@@ -25,8 +25,8 @@ namespace HumanCapitalManagement.Handlers.Commands.Projects
                 CreateDate = DateTime.UtcNow,
             };
 
-            await context.Set<Project>().AddAsync(newProject);
-            await context.SaveChangesAsync();
+            await this.repository.AddProject(newProject);
+            await this.repository.SaveChangesAsync();
 
             return new CreateProjectResult();
         }

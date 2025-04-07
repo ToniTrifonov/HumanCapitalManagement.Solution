@@ -1,36 +1,32 @@
 ﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Queries.Projects;
 using HumanCapitalManagement.Contracts.Results.Projects;
-using HumanCapitalManagement.Data.Data;
-using HumanCapitalManagement.Data.Entities;
-using Microsoft.EntityFrameworkCore;
+using HumanCapitalManagement.Data.Contracts;
 
 namespace HumanCapitalManagement.Handlers.Queries.Projects
 {
     public class ProjectsByUserIdQueryHandler : IAsyncQueryHandler<ProjectsByUserIdQuery, ProjectsByUserIdResult>
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationRepository repository;
 
-        public ProjectsByUserIdQueryHandler(ApplicationDbContext context)
+        public ProjectsByUserIdQueryHandler(IApplicationRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
         public async Task<ProjectsByUserIdResult> HandleAsync(ProjectsByUserIdQuery query)
         {
-            var projects = await this.context.Set<Project>()
-                .Where(project => project.UserId == query.UserId)
-                .Select(project => new ProjectsResultItem()
-                {
-                    Id = project.Id,
-                    CreateDate = project.CreateDate,
-                    Size = project.Size,
-                    Description = project.Description,
-                    Name = project.Name,
-                })
-                .ToListAsync();
+            var projects = await this.repository.ProjectsByUserId(query.UserId);
+            var projectsResult = projects.Select(project => new ProjectsResultItem()
+            {
+                Id = project.Id,
+                Size = project.Size,
+                CreateDate = project.CreateDate,
+                Description = project.Description,
+                Name = project.Name,
+            }).ToList();
 
-            return new ProjectsByUserIdResult(projects);
+            return new ProjectsByUserIdResult(projectsResult);
         }
     }
 }

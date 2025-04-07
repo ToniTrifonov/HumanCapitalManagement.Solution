@@ -1,30 +1,25 @@
 ﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Queries.Employees;
 using HumanCapitalManagement.Contracts.Results.Employees;
-using HumanCapitalManagement.Data.Data;
-using HumanCapitalManagement.Data.Entities;
-using Microsoft.EntityFrameworkCore;
+using HumanCapitalManagement.Data.Contracts;
 
 namespace HumanCapitalManagement.Handlers.Queries.Employees
 {
     public class EmployeeByIdQueryHandler : IAsyncQueryHandler<EmployeeByIdQuery, EmployeeByIdResult>
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationRepository repository;
 
-        public EmployeeByIdQueryHandler(ApplicationDbContext context)
+        public EmployeeByIdQueryHandler(IApplicationRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
         public async Task<EmployeeByIdResult> HandleAsync(EmployeeByIdQuery query)
         {
-            var employee = await this.context.Set<Employee>()
-                .Where(employee => employee.Id == query.Id)
-                .Where(employee => !employee.IsDeleted)
-                .Select(employee => new EmployeeResultItem(employee.Id, employee.FirstName, employee.LastName, employee.Position, employee.Salary))
-                .FirstOrDefaultAsync();
+            var employee = await this.repository.EmployeeById(query.Id);
+            var employeeResult = new EmployeeResultItem(employee.Id, employee.FirstName, employee.LastName, employee.Position, employee.Salary)
 
-            return new EmployeeByIdResult(employee);
+            return new EmployeeByIdResult(employeeResult);
         }
     }
 }

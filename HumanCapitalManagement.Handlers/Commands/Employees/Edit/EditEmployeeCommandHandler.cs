@@ -1,24 +1,22 @@
 ﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Employees;
 using HumanCapitalManagement.Contracts.Results.Employees;
-using HumanCapitalManagement.Data.Data;
-using HumanCapitalManagement.Data.Entities;
-using Microsoft.EntityFrameworkCore;
+using HumanCapitalManagement.Data.Contracts;
 
 namespace HumanCapitalManagement.Handlers.Commands.Employees.Edit
 {
     public class EditEmployeeCommandHandler : IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationRepository repository;
 
-        public EditEmployeeCommandHandler(ApplicationDbContext context)
+        public EditEmployeeCommandHandler(IApplicationRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
         public async Task<EditEmployeeResult> HandleAsync(EditEmployeeCommand command)
         {
-            var employee = await context.Set<Employee>().FirstOrDefaultAsync(employee => employee.Id == command.Id);
+            var employee = await this.repository.EmployeeById(command.Id);
             if (employee == null)
             {
                 return new EditEmployeeResult("Employee does not exist.");
@@ -29,7 +27,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees.Edit
             employee.Salary = command.Salary;
             employee.Position = command.Position;
 
-            await context.SaveChangesAsync();
+            await this.repository.SaveChangesAsync();
             return new EditEmployeeResult();
         }
     }

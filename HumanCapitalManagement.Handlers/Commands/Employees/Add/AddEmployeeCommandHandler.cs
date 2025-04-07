@@ -1,24 +1,23 @@
 ﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Employees;
 using HumanCapitalManagement.Contracts.Results.Employees;
-using HumanCapitalManagement.Data.Data;
+using HumanCapitalManagement.Data.Contracts;
 using HumanCapitalManagement.Data.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace HumanCapitalManagement.Handlers.Commands.Employees.Add
 {
     public class AddEmployeeCommandHandler : IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>
     {
-        private readonly ApplicationDbContext context;
+        private readonly IApplicationRepository repository;
 
-        public AddEmployeeCommandHandler(ApplicationDbContext context)
+        public AddEmployeeCommandHandler(IApplicationRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
         public async Task<AddEmployeeResult> HandleAsync(AddEmployeeCommand command)
         {
-            var projectExists = await context.Set<Project>().AnyAsync(project => project.Id == command.ProjectId);
+            var projectExists = await this.repository.ProjectExists(command.ProjectId);
             if (!projectExists)
             {
                 return new AddEmployeeResult("Invalid project.");
@@ -33,8 +32,8 @@ namespace HumanCapitalManagement.Handlers.Commands.Employees.Add
                 ProjectId = command.ProjectId,
             };
 
-            await context.Set<Employee>().AddAsync(newEmployee);
-            await context.SaveChangesAsync();
+            await this.repository.AddEmployee(newEmployee);
+            await this.repository.SaveChangesAsync();
 
             return new AddEmployeeResult();
         }
