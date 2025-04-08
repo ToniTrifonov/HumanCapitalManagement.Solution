@@ -1,8 +1,10 @@
-﻿using HumanCapitalManagement.Contracts.Commands.Accounts;
+﻿using HumanCapitalManagement.Contracts;
+using HumanCapitalManagement.Contracts.Commands.Accounts;
+using HumanCapitalManagement.Contracts.Queries.Passwords;
 using HumanCapitalManagement.Contracts.Results.Accounts;
+using HumanCapitalManagement.Contracts.Results.Passwords;
 using HumanCapitalManagement.Data.Contracts;
 using HumanCapitalManagement.Handlers.Commands.Accounts;
-using HumanCapitalManagement.Handlers.Queries.Passwords;
 using Moq;
 
 namespace HumanCapitalManagement.Tests.Commands.Accounts
@@ -15,14 +17,14 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         private readonly Mock<IAccountsRepository> accountsRepositoryMock;
         private readonly Mock<IRolesRepository> rolesRepositoryMock;
         private readonly Mock<IAccountRoleRepository> accountsRolesRepositoryMock;
-        private readonly Mock<GetHashedPasswordQueryHandler> passwordHasherMock;
+        private readonly Mock<IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult>> passwordHasherMock;
 
         public CreateAccountCommandHandlerTests()
         {
             accountsRepositoryMock = new Mock<IAccountsRepository>();
             rolesRepositoryMock = new Mock<IRolesRepository>();
             accountsRolesRepositoryMock = new Mock<IAccountRoleRepository>();
-            passwordHasherMock = new Mock<GetHashedPasswordQueryHandler>();
+            passwordHasherMock = new Mock<IAsyncQueryHandler<GetHashedPasswordQuery, GetHashedPasswordResult>>();
 
             createAccountHandler = new CreateAccountCommandHandler(
                 accountsRepositoryMock.Object, rolesRepositoryMock.Object, accountsRolesRepositoryMock.Object, passwordHasherMock.Object);
@@ -32,7 +34,9 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         public async Task HandleAsync_ShouldReturnFailedResultWithCorrectErrorMessage_WhenEmailIsInUse()
         {
             // Arrange
-            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>())).ReturnsAsync(true);
+            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>()))
+                .ReturnsAsync(true);
+
             var command = new CreateAccountCommand("test", "testPassword", "testRole");
             var expectedResult = new CreateAccountResult("Email already in use.", succeed: false);
 
@@ -48,8 +52,10 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         public async Task HandleAsync_ShouldReturnFailedResultWithCorrectErrorMessage_WhenRoleDoesNotExist()
         {
             // Arrange
-            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>())).ReturnsAsync(false);
-            rolesRepositoryMock.Setup(x => x.RoleIdByName(It.IsAny<string>())).ReturnsAsync((string?)null);
+            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>()))
+                .ReturnsAsync(false);
+            rolesRepositoryMock.Setup(x => x.RoleIdByName(It.IsAny<string>()))
+                .ReturnsAsync((string?)null);
 
             var command = new CreateAccountCommand("test", "testPassword", "testRole");
             var expectedResult = new CreateAccountResult("Role does not exist.", succeed: false);
@@ -66,8 +72,12 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         public async Task HandleAsync_ShouldReturnSuccessfulResult()
         {
             // Arrange
-            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>())).ReturnsAsync(false);
-            rolesRepositoryMock.Setup(x => x.RoleIdByName(It.IsAny<string>())).ReturnsAsync("123");
+            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>()))
+                .ReturnsAsync(false);
+            rolesRepositoryMock.Setup(x => x.RoleIdByName(It.IsAny<string>()))
+                .ReturnsAsync("123");
+            passwordHasherMock.Setup(x => x.HandleAsync(It.IsAny<GetHashedPasswordQuery>()))
+                .ReturnsAsync(new GetHashedPasswordResult("hashedPassTest"));
 
             var command = new CreateAccountCommand("test", "testPassword", "testRole");
             var expectedResult = new CreateAccountResult("Account successfully created.", succeed: true);
