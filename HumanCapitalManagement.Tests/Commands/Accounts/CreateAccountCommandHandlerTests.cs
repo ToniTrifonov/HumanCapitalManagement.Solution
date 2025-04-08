@@ -34,7 +34,8 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         public async Task HandleAsync_ShouldReturnFailedResultWithCorrectErrorMessage_WhenEmailIsInUse()
         {
             // Arrange
-            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>()))
+            accountsRepositoryMock
+                .Setup(x => x.UserEmailInUse(It.IsAny<string>()))
                 .ReturnsAsync(true);
 
             var command = new CreateAccountCommand("test", "testPassword", "testRole");
@@ -52,9 +53,11 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         public async Task HandleAsync_ShouldReturnFailedResultWithCorrectErrorMessage_WhenRoleDoesNotExist()
         {
             // Arrange
-            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>()))
+            accountsRepositoryMock
+                .Setup(x => x.UserEmailInUse(It.IsAny<string>()))
                 .ReturnsAsync(false);
-            rolesRepositoryMock.Setup(x => x.RoleIdByName(It.IsAny<string>()))
+            rolesRepositoryMock
+                .Setup(x => x.RoleIdByName(It.IsAny<string>()))
                 .ReturnsAsync((string?)null);
 
             var command = new CreateAccountCommand("test", "testPassword", "testRole");
@@ -72,11 +75,14 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         public async Task HandleAsync_ShouldReturnSuccessfulResult()
         {
             // Arrange
-            accountsRepositoryMock.Setup(x => x.UserEmailInUse(It.IsAny<string>()))
+            accountsRepositoryMock
+                .Setup(x => x.UserEmailInUse(It.IsAny<string>()))
                 .ReturnsAsync(false);
-            rolesRepositoryMock.Setup(x => x.RoleIdByName(It.IsAny<string>()))
+            rolesRepositoryMock
+                .Setup(x => x.RoleIdByName(It.IsAny<string>()))
                 .ReturnsAsync("123");
-            passwordHasherMock.Setup(x => x.HandleAsync(It.IsAny<GetHashedPasswordQuery>()))
+            passwordHasherMock
+                .Setup(x => x.HandleAsync(It.IsAny<GetHashedPasswordQuery>()))
                 .ReturnsAsync(new GetHashedPasswordResult("hashedPassTest"));
 
             var command = new CreateAccountCommand("test", "testPassword", "testRole");

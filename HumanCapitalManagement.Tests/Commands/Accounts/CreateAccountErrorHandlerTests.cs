@@ -25,7 +25,9 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         {
             // Arrange
             var expectedResult = new CreateAccountResult("Successful result", succeed: true);
-            mockObject.Setup(x => x.HandleAsync(It.IsAny<CreateAccountCommand>())).ReturnsAsync(expectedResult);
+            mockObject
+                .Setup(x => x.HandleAsync(It.IsAny<CreateAccountCommand>()))
+                .ReturnsAsync(expectedResult);
 
             var command = new CreateAccountCommand("testEmail", "testPass", "testRole");
 
@@ -41,7 +43,9 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         public async Task HandleAsync_ShouldReturnFailedResultWithCorrectMessage_WhenExceptionIsThrown()
         {
             // Arrange
-            mockObject.Setup(x => x.HandleAsync(It.IsAny<CreateAccountCommand>())).ThrowsAsync(new Exception("test"));
+            mockObject
+                .Setup(x => x.HandleAsync(It.IsAny<CreateAccountCommand>()))
+                .ThrowsAsync(new Exception("test"));
 
             var command = new CreateAccountCommand("testEmail", "testPass", "testRole");
             var expectedResult = new CreateAccountResult("An unexpected error occurred.", succeed: false);
