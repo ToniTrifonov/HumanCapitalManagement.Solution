@@ -7,6 +7,7 @@ using Moq;
 
 namespace HumanCapitalManagement.Tests.Commands.Employees.Edit
 {
+    [TestClass]
     public class EditEmployeeErrorHandlerTests
     {
         private readonly EditEmployeeErrorHandler errorHandler;

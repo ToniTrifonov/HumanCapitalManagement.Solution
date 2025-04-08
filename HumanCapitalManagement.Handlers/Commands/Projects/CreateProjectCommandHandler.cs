@@ -14,6 +14,7 @@ namespace HumanCapitalManagement.Handlers.Commands.Projects
         {
             this.repository = repository;
         }
+
         public async Task<CreateProjectResult> HandleAsync(CreateProjectCommand command)
         {
             var newProject = new Project()
