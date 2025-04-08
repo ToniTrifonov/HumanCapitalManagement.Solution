@@ -1,7 +1,6 @@
 ﻿using HumanCapitalManagement.Contracts;
 using HumanCapitalManagement.Contracts.Commands.Accounts;
 using HumanCapitalManagement.Contracts.Queries.Passwords;
-using HumanCapitalManagement.Contracts.Results.Accounts;
 using HumanCapitalManagement.Contracts.Results.Passwords;
 using HumanCapitalManagement.Data.Contracts;
 using HumanCapitalManagement.Handlers.Commands.Accounts;
@@ -39,14 +38,13 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
                 .ReturnsAsync(true);
 
             var command = new CreateAccountCommand("test", "testPassword", "testRole");
-            var expectedResult = new CreateAccountResult("Email already in use.", succeed: false);
 
             // Act
             var result = await this.createAccountHandler.HandleAsync(command);
 
             // Assert
-            Assert.AreEqual(expectedResult.Succeed, result.Succeed);
-            Assert.AreEqual(expectedResult.Message, result.Message);
+            Assert.AreEqual(false, result.Succeed);
+            Assert.AreEqual("Email already in use.", result.Message);
         }
 
         [TestMethod]
@@ -61,14 +59,13 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
                 .ReturnsAsync((string?)null);
 
             var command = new CreateAccountCommand("test", "testPassword", "testRole");
-            var expectedResult = new CreateAccountResult("Role does not exist.", succeed: false);
 
             // Act
             var result = await this.createAccountHandler.HandleAsync(command);
 
             // Assert
-            Assert.AreEqual(expectedResult.Succeed, result.Succeed);
-            Assert.AreEqual(expectedResult.Message, result.Message);
+            Assert.AreEqual(false, result.Succeed);
+            Assert.AreEqual("Role does not exist.", result.Message);
         }
 
         [TestMethod]
@@ -86,14 +83,13 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
                 .ReturnsAsync(new GetHashedPasswordResult("hashedPassTest"));
 
             var command = new CreateAccountCommand("test", "testPassword", "testRole");
-            var expectedResult = new CreateAccountResult("Account successfully created.", succeed: true);
 
             // Act
             var result = await this.createAccountHandler.HandleAsync(command);
 
             // Assert
-            Assert.AreEqual(expectedResult.Succeed, result.Succeed);
-            Assert.AreEqual(expectedResult.Message, result.Message);
+            Assert.AreEqual(true, result.Succeed);
+            Assert.AreEqual("Account successfully created.", result.Message);
         }
     }
 }

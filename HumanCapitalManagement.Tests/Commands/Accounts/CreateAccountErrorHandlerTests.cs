@@ -21,7 +21,25 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
         }
 
         [TestMethod]
-        public async Task HandleAsync_ShouldReturnSuccessfulResult()
+        public async Task HandleAsync_ShouldReturnFailedResultWithCorrectMessage_WhenExceptionIsThrown()
+        {
+            // Arrange
+            mockObject
+                .Setup(x => x.HandleAsync(It.IsAny<CreateAccountCommand>()))
+                .ThrowsAsync(new Exception());
+
+            var command = new CreateAccountCommand("testEmail", "testPass", "testRole");
+
+            // Act
+            var result = await this.errorHandler.HandleAsync(command);
+
+            // Assert
+            Assert.AreEqual(false, result.Succeed);
+            Assert.AreEqual("An unexpected error occurred.", result.Message);
+        }
+
+        [TestMethod]
+        public async Task HandleAsync_ShouldReturnTheResultOfTheHandlerItDecorates_WhenNoException()
         {
             // Arrange
             var expectedResult = new CreateAccountResult("Successful result", succeed: true);
@@ -35,27 +53,7 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
             var result = await this.errorHandler.HandleAsync(command);
 
             // Assert
-            Assert.AreEqual(expectedResult.Succeed, result.Succeed);
-            Assert.AreEqual(expectedResult.Message, result.Message);
-        }
-
-        [TestMethod]
-        public async Task HandleAsync_ShouldReturnFailedResultWithCorrectMessage_WhenExceptionIsThrown()
-        {
-            // Arrange
-            mockObject
-                .Setup(x => x.HandleAsync(It.IsAny<CreateAccountCommand>()))
-                .ThrowsAsync(new Exception("test"));
-
-            var command = new CreateAccountCommand("testEmail", "testPass", "testRole");
-            var expectedResult = new CreateAccountResult("An unexpected error occurred.", succeed: false);
-
-            // Act
-            var result = await this.errorHandler.HandleAsync(command);
-
-            // Assert
-            Assert.AreEqual(expectedResult.Succeed, result.Succeed);
-            Assert.AreEqual(expectedResult.Message, result.Message);
+            Assert.AreEqual(expectedResult, result);
         }
     }
 }
