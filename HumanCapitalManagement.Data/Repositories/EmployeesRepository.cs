@@ -28,6 +28,14 @@ namespace HumanCapitalManagement.Data.Repositories
             return await this.employees.FirstOrDefaultAsync(employee => employee.Id == employeeId && !employee.IsDeleted);
         }
 
+        public async Task<List<Employee>> EmployeesByProjectId(string projectId)
+        {
+            return await this.employees
+                .Where(employee => employee.ProjectId == projectId)
+                .Where(employee => !employee.IsDeleted)
+                .ToListAsync();
+        }
+
         public async Task DeleteEmployee(string employeeId)
         {
             var employee = this.employees.Find(employeeId);

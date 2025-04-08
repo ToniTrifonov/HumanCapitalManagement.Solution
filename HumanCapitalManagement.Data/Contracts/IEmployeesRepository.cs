@@ -7,6 +7,8 @@ namespace HumanCapitalManagement.Data.Contracts
     {
         Task<Employee> EmployeeById(string employeeId);
 
+        Task<List<Employee>> EmployeesByProjectId(string projectId);
+
         Task DeleteEmployee(string employeeId);
 
         Task EditEmployee(string id, string firstName, string lastName, decimal salary, EmployeePosition position);
