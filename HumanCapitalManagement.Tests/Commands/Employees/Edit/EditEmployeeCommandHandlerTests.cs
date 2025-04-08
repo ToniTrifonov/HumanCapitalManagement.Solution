@@ -11,13 +11,11 @@ namespace HumanCapitalManagement.Tests.Commands.Employees.Edit
     public class EditEmployeeCommandHandlerTests
     {
         private readonly EditEmployeeCommandHandler handler;
-
         private readonly Mock<IEmployeesRepository> employeesRepositoryMock;
 
         public EditEmployeeCommandHandlerTests()
         {
             employeesRepositoryMock = new Mock<IEmployeesRepository>();
-
             handler = new EditEmployeeCommandHandler(employeesRepositoryMock.Object);
         }
 

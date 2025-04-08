@@ -9,13 +9,11 @@ namespace HumanCapitalManagement.Tests.Commands.Projects
     public class CreateProjectCommandHandlerTests
     {
         private readonly CreateProjectCommandHandler handler;
-
         private readonly Mock<IProjectsRepository> projectsRepositoryMock;
 
         public CreateProjectCommandHandlerTests()
         {
             projectsRepositoryMock = new Mock<IProjectsRepository>();
-
             handler = new CreateProjectCommandHandler(projectsRepositoryMock.Object);
         }
 

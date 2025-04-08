@@ -11,13 +11,11 @@ namespace HumanCapitalManagement.Tests.Commands.Employees.Add
     public class AddEmployeeErrorHandlerTests
     {
         private readonly AddEmployeeErrorHandler errorHandler;
-
         private readonly Mock<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>> addEmployeeMock;
 
         public AddEmployeeErrorHandlerTests()
         {
             addEmployeeMock = new Mock<IAsyncCommandHandler<AddEmployeeCommand, AddEmployeeResult>>();
-
             errorHandler = new AddEmployeeErrorHandler(addEmployeeMock.Object);
         }
 

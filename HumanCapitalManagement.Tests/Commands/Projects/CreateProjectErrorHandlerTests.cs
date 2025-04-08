@@ -10,13 +10,11 @@ namespace HumanCapitalManagement.Tests.Commands.Projects
     public class CreateProjectErrorHandlerTests
     {
         private readonly CreateProjectErrorHandler errorHandler;
-
         private readonly Mock<IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>> createProjectMock;
 
         public CreateProjectErrorHandlerTests()
         {
             createProjectMock = new Mock<IAsyncCommandHandler<CreateProjectCommand, CreateProjectResult>>();
-
             errorHandler = new CreateProjectErrorHandler(createProjectMock.Object);
         }
 

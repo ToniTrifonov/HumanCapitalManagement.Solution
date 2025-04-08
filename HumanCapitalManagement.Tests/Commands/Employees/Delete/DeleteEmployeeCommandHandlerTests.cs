@@ -10,13 +10,11 @@ namespace HumanCapitalManagement.Tests.Commands.Employees.Delete
     public class DeleteEmployeeCommandHandlerTests
     {
         private readonly DeleteEmployeeCommandHandler handler;
-
         private readonly Mock<IEmployeesRepository> employeesRepositoryMock;
 
         public DeleteEmployeeCommandHandlerTests()
         {
             employeesRepositoryMock = new Mock<IEmployeesRepository>();
-
             handler = new DeleteEmployeeCommandHandler(employeesRepositoryMock.Object);
         }
 

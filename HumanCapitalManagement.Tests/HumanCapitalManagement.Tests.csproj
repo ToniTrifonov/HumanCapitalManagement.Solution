@@ -16,4 +16,8 @@
     <ProjectReference Include="..\HumanCapitalManagement.Handlers\HumanCapitalManagement.Handlers.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>

@@ -10,13 +10,11 @@ namespace HumanCapitalManagement.Tests.Commands.Accounts
     public class CreateAccountErrorHandlerTests
     {
         private readonly CreateAccountErrorHandler errorHandler;
-
         private readonly Mock<IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>> mockObject;
 
         public CreateAccountErrorHandlerTests()
         {
             mockObject = new Mock<IAsyncCommandHandler<CreateAccountCommand, CreateAccountResult>>();
-
             errorHandler = new CreateAccountErrorHandler(mockObject.Object);
         }
 

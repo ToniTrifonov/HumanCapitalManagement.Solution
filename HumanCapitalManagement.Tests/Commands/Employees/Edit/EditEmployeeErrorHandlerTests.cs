@@ -11,13 +11,11 @@ namespace HumanCapitalManagement.Tests.Commands.Employees.Edit
     public class EditEmployeeErrorHandlerTests
     {
         private readonly EditEmployeeErrorHandler errorHandler;
-
         private readonly Mock<IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>> editEmployeeMock;
 
         public EditEmployeeErrorHandlerTests()
         {
             editEmployeeMock = new Mock<IAsyncCommandHandler<EditEmployeeCommand, EditEmployeeResult>>();
-
             errorHandler = new EditEmployeeErrorHandler(editEmployeeMock.Object);
         }
 
