@@ -16,13 +16,10 @@ namespace HumanCapitalManagement.IntegrationTests.Repositories
         public EmployeesRepositoryTests()
         {
             var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseSqlServer("Server=.;Database=HumanCapitalManagementTests;TrustServerCertificate=true;Integrated Security=true")
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
             context = new ApplicationDbContext(contextOptions);
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
-
             repository = new EmployeesRepository(context);
         }
 
@@ -36,7 +33,6 @@ namespace HumanCapitalManagement.IntegrationTests.Repositories
         public void Dispose()
         {
             context.Database.EnsureDeleted();
-            context.Dispose();
         }
 
         [TestMethod]
@@ -56,9 +52,9 @@ namespace HumanCapitalManagement.IntegrationTests.Repositories
 
             // Assert
             Assert.IsNotNull(employee);
-            Assert.AreEqual(employee.Id, newEmployee.Id);
-            Assert.AreEqual(employee.FirstName, newEmployee.FirstName);
-            Assert.AreEqual(employee.LastName, newEmployee.LastName);
+            Assert.AreEqual(newEmployee.Id, employee.Id);
+            Assert.AreEqual(newEmployee.FirstName, employee.FirstName);
+            Assert.AreEqual(newEmployee.LastName, employee.LastName);
         }
 
         [TestMethod]
