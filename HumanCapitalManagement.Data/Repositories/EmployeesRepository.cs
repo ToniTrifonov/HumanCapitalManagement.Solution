@@ -14,7 +14,7 @@ namespace HumanCapitalManagement.Data.Repositories
         public EmployeesRepository(ApplicationDbContext context)
         {
             this.context = context;
-            this.employees = this.context.Set<Employee>();
+            this.employees = context.Employees;
         }
 
         public async Task Add(Employee entity)

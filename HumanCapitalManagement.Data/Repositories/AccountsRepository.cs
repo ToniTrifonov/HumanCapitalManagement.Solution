@@ -13,7 +13,7 @@ namespace HumanCapitalManagement.Data.Repositories
         public AccountsRepository(ApplicationDbContext context)
         {
             this.context = context;
-            this.users = context.Set<IdentityUser>();
+            this.users = context.Users;
         }
 
         public async Task Add(IdentityUser entity)

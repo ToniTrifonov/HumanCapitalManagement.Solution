@@ -13,7 +13,7 @@ namespace HumanCapitalManagement.Data.Repositories
         public AccountRoleRepository(ApplicationDbContext context)
         {
             this.context = context;
-            this.userRoles = context.Set<IdentityUserRole<string>>();
+            this.userRoles = context.UserRoles;
         }
 
         public async Task Add(IdentityUserRole<string> entity)

@@ -13,7 +13,7 @@ namespace HumanCapitalManagement.Data.Repositories
         public ProjectsRepository(ApplicationDbContext context)
         {
             this.context = context;
-            this.projects = context.Set<Project>();
+            this.projects = context.Projects;
         }
 
         public async Task Add(Project entity)
