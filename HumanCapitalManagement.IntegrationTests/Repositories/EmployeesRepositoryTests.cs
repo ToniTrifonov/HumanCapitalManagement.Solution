@@ -32,6 +32,13 @@ namespace HumanCapitalManagement.IntegrationTests.Repositories
             context.Database.EnsureCreated();
         }
 
+        [TestCleanup()]
+        public void Dispose()
+        {
+            context.Database.EnsureDeleted();
+            context.Dispose();
+        }
+
         [TestMethod]
         public async Task Add_ShouldCorrectlyAddNewEmployee()
         {
@@ -90,16 +97,16 @@ namespace HumanCapitalManagement.IntegrationTests.Repositories
         }
 
         [TestMethod]
-        public async Task EmployeesByProjectId_ShouldReturnNonDeletedEmployees_WhenTheyExist()
+        public async Task EmployeesByProjectId_ShouldReturnNonDeletedProjectEmployees_WhenTheyExist()
         {
             // Arrange
             this.context.Users.Add(new IdentityUser() { Id = "1" });
             this.context.Projects.Add(new Project() { Id = "1", UserId = "1" });
             this.context.Projects.Add(new Project() { Id = "2", UserId = "1" });
 
-            this.context.Employees.Add(new Employee() { Id = "123", FirstName = "test", IsDeleted = true, ProjectId = "1" });
-            this.context.Employees.Add(new Employee() { Id = "1234", FirstName = "test2", IsDeleted = false, ProjectId = "2" });
-            this.context.Employees.Add(new Employee() { Id = "12345", FirstName = "test3", IsDeleted = false, ProjectId = "1" });
+            this.context.Employees.Add(new Employee() { Id = "123", IsDeleted = true, ProjectId = "1" });
+            this.context.Employees.Add(new Employee() { Id = "1234", IsDeleted = false, ProjectId = "2" });
+            this.context.Employees.Add(new Employee() { Id = "12345", IsDeleted = false, ProjectId = "1" });
             await this.context.SaveChangesAsync();
 
             // Act
@@ -118,9 +125,9 @@ namespace HumanCapitalManagement.IntegrationTests.Repositories
             this.context.Projects.Add(new Project() { Id = "1", UserId = "1" });
             this.context.Projects.Add(new Project() { Id = "2", UserId = "1" });
 
-            this.context.Employees.Add(new Employee() { Id = "123", FirstName = "test", IsDeleted = true, ProjectId = "1" });
-            this.context.Employees.Add(new Employee() { Id = "1234", FirstName = "test2", IsDeleted = false, ProjectId = "2" });
-            this.context.Employees.Add(new Employee() { Id = "12345", FirstName = "test3", IsDeleted = true, ProjectId = "2" });
+            this.context.Employees.Add(new Employee() { Id = "123", IsDeleted = true, ProjectId = "1" });
+            this.context.Employees.Add(new Employee() { Id = "1234", IsDeleted = false, ProjectId = "2" });
+            this.context.Employees.Add(new Employee() { Id = "12345", IsDeleted = true, ProjectId = "2" });
             await this.context.SaveChangesAsync();
 
             // Act
@@ -134,7 +141,7 @@ namespace HumanCapitalManagement.IntegrationTests.Repositories
         public async Task DeleteEmployee_ShouldUpdateIsDeletedProperty()
         {
             // Arrange
-            this.context.Employees.Add(new Employee() { Id = "123", FirstName = "test", IsDeleted = false });
+            this.context.Employees.Add(new Employee() { Id = "123", IsDeleted = false });
             await this.context.SaveChangesAsync();
 
             // Act
@@ -170,13 +177,6 @@ namespace HumanCapitalManagement.IntegrationTests.Repositories
             Assert.AreEqual("newLastName", employee.LastName);
             Assert.AreEqual(12345, employee.Salary);
             Assert.AreEqual(EmployeePosition.BackEndDeveloper, employee.Position);
-        }
-
-        [TestCleanup()]
-        public void Dispose()
-        {
-            context.Database.EnsureDeleted();
-            context.Dispose();
         }
     }
 }
