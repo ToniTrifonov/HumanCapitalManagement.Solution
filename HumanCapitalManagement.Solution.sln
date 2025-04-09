@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Hand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Data", "HumanCapitalManagement.Data\HumanCapitalManagement.Data.csproj", "{172B0E55-D6AD-439C-AD7A-702CF256C02D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.Tests", "HumanCapitalManagement.Tests\HumanCapitalManagement.Tests.csproj", "{023A7279-D26C-4910-9FB6-83B2213E827B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.UnitTests", "HumanCapitalManagement.Tests\HumanCapitalManagement.UnitTests.csproj", "{023A7279-D26C-4910-9FB6-83B2213E827B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanCapitalManagement.IntegrationTests", "HumanCapitalManagement.IntegrationTests\HumanCapitalManagement.IntegrationTests.csproj", "{4D460B82-5D06-4136-BE0B-9108CBE15D34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{023A7279-D26C-4910-9FB6-83B2213E827B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{023A7279-D26C-4910-9FB6-83B2213E827B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{023A7279-D26C-4910-9FB6-83B2213E827B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D460B82-5D06-4136-BE0B-9108CBE15D34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D460B82-5D06-4136-BE0B-9108CBE15D34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D460B82-5D06-4136-BE0B-9108CBE15D34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D460B82-5D06-4136-BE0B-9108CBE15D34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

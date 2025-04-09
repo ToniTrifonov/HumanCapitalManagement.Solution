@@ -4,7 +4,7 @@ using HumanCapitalManagement.Data.Entities;
 using HumanCapitalManagement.Handlers.Queries.Projects;
 using Moq;
 
-namespace HumanCapitalManagement.Tests.Queries.Projects
+namespace HumanCapitalManagement.UnitTests.Queries.Projects
 {
     [TestClass]
     public class ProjectsByIdQueryHandlerTests

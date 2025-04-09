@@ -4,7 +4,7 @@ using HumanCapitalManagement.Contracts.Results.Employees;
 using HumanCapitalManagement.Handlers.Commands.Employees.Delete;
 using Moq;
 
-namespace HumanCapitalManagement.Tests.Commands.Employees.Delete
+namespace HumanCapitalManagement.UnitTests.Commands.Employees.Delete
 {
     [TestClass]
     public class DeleteEmployeeErrorHandlerTests

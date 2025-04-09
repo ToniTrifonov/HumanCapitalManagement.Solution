@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 
-namespace HumanCapitalManagement.Tests.Repositories
+namespace HumanCapitalManagement.UnitTests.Repositories
 {
     [TestClass]
     public class AccountsRepositoryTests

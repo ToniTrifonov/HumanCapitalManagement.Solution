@@ -5,7 +5,7 @@ using HumanCapitalManagement.Data.Enums;
 using HumanCapitalManagement.Handlers.Queries.Employees;
 using Moq;
 
-namespace HumanCapitalManagement.Tests.Queries.Employees
+namespace HumanCapitalManagement.UnitTests.Queries.Employees
 {
     [TestClass]
     public class EmployeesByProjectIdQueryHandlerTests

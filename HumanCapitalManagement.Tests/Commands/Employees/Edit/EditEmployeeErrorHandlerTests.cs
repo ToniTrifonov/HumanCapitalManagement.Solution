@@ -5,7 +5,7 @@ using HumanCapitalManagement.Data.Enums;
 using HumanCapitalManagement.Handlers.Commands.Employees.Edit;
 using Moq;
 
-namespace HumanCapitalManagement.Tests.Commands.Employees.Edit
+namespace HumanCapitalManagement.UnitTests.Commands.Employees.Edit
 {
     [TestClass]
     public class EditEmployeeErrorHandlerTests

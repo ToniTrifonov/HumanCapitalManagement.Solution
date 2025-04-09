@@ -4,7 +4,7 @@ using HumanCapitalManagement.Contracts.Results.Projects;
 using HumanCapitalManagement.Handlers.Commands.Projects;
 using Moq;
 
-namespace HumanCapitalManagement.Tests.Commands.Projects
+namespace HumanCapitalManagement.UnitTests.Commands.Projects
 {
     [TestClass]
     public class CreateProjectErrorHandlerTests

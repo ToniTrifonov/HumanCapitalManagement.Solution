@@ -6,7 +6,7 @@ using HumanCapitalManagement.Data.Contracts;
 using HumanCapitalManagement.Handlers.Commands.Accounts;
 using Moq;
 
-namespace HumanCapitalManagement.Tests.Commands.Accounts
+namespace HumanCapitalManagement.UnitTests.Commands.Accounts
 {
     [TestClass]
     public class CreateAccountCommandHandlerTests

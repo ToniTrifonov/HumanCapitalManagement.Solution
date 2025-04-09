@@ -5,7 +5,7 @@ using HumanCapitalManagement.Data.Enums;
 using HumanCapitalManagement.Handlers.Commands.Employees.Add;
 using Moq;
 
-namespace HumanCapitalManagement.Tests.Commands.Employees.Add
+namespace HumanCapitalManagement.UnitTests.Commands.Employees.Add
 {
     [TestClass]
     public class AddEmployeeErrorHandlerTests
