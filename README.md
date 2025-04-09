@@ -1,4 +1,4 @@
-# HumanCapitalManagement.Solution
+# Human Capital Management
 
 Welcome to the Human Capital Management application!
 
