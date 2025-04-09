@@ -8,7 +8,7 @@ The site can be launched by setting HumanCapitalManagement.Web project as Startu
 The Sql Server connection string is configured to work with a local Sql Server. Therefore, if an Sql Server is installed all that needs to be done is writing Update-Database in the Package Manager Console in order for a new database and schema to be created.
 
 There are 2 user roles -> Admin and Project Manager.
-On application startup a database seeder creates the main Admin account which can be used for creating other accounts with either Admin or Project Manager role. Each account with Admin role can create new accounts and each account with Project Manager role can create projects and add employees to them.
+On database creation a database seeder creates the main Admin account which can be used for creating other accounts with either Admin or Project Manager role. Each account with Admin role can create new accounts and each account with Project Manager role can create projects and add employees to them.
 
 The following account can be used to login to the site and create other Admins or Project Managers:
 Username: admin@admin.com
